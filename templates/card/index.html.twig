@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CardController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ '/Users/julien/code/montessori/symfony-test/src/Controller/CardController.php'|file_link(0) }}">src/Controller/CardController.php</a></code></li>
+        <li>Your template at <code><a href="{{ '/Users/julien/code/montessori/symfony-test/templates/card/index.html.twig'|file_link(0) }}">templates/card/index.html.twig</a></code></li>
+    </ul>
+    <ul>
+      {% for card in cards %}
+      <li>Card {{card.id}}</li>
+      <ul>
+        {% for image in card.images %}
+        <img src="{{image.name}}"/>
+        <p>{{image.label}}</p>
+        {% endfor %}
+      </ul>
+      {% endfor %}
+    </ul>
+</div>
+{% endblock %}
