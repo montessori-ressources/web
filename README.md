@@ -26,6 +26,8 @@ Then you can populate with fake data:
 bin/console doctrine:fixture:load
 ```
 
+Faker formaters : https://github.com/fzaninotto/Faker#formatters
+
 ## Test
 
 Run:

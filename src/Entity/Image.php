@@ -89,4 +89,8 @@ class Image
     public function __toString() {
       return $this->label;
     }
+
+    public function __construct() {
+      $this->updatedAt = new \DateTime('now');
+    }
 }

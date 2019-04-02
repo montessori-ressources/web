@@ -19,7 +19,7 @@ class ClassifiedCard
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Image")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Image", cascade={"persist"})
      */
     private $images;
 
