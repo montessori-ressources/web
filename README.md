@@ -1,5 +1,7 @@
 # Montessori-Ressources web app
 
+[![Build Status](https://travis-ci.org/montessori-ressources/web.svg?branch=master)](https://travis-ci.org/montessori-ressources/web)
+
 This is the git repository of the Montessori Ressources webapp. It is a Symfony
 webapp designed to help Montessori community finding the right tool.
 
