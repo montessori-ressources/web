@@ -2,6 +2,7 @@ language: php
 
 install:
   - composer install
+  - bin/console doctrine:schema:create
   - ./bin/phpunit install
 
 script:
