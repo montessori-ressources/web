@@ -15,12 +15,24 @@ First you need to install the needed dependencies :
 composer install
 ```
 
+By default you can develop on SQLite db, it comes with no prerequisites. If you
+want to test mysql then you have to create a `.env.local` file (do not commit!)
+with the following content:
+
+```
+DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
+```
+
+and change db_user db_password db_name with corect values for you.
+
 Then you can init the database (SQlite by default to avoid a MySQL database running
   on local)
 
 ```
 bin/console doctrine:schema:create
 ```
+
+
 
 Then you can populate with fake data:
 
