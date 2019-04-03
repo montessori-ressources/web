@@ -12,6 +12,6 @@ class ClassifiedCardControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Hello CardController', $crawler->filter('h1')->text());
+        $this->assertContains('MONTESSORI RESSOURCES', $crawler->filter('h1')->text());
     }
 }
