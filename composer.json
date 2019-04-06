@@ -72,8 +72,7 @@
             "@auto-scripts"
         ],
         "compile": [
-            "bin/console doctrine:schema:update --force",
-            "bin/console doctrine:fixture:load -n"
+            "bin/console doctrine:schema:update --force"
         ]
     },
     "conflict": {
