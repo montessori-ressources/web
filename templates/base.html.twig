@@ -11,7 +11,7 @@
   <body>
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item" href="#">
+        <a class="navbar-item" href="{{ path('home') }}">
           <strong>MONTESSORI RESSOURCES</strong>
         </a>
 
@@ -24,11 +24,11 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item">
+          <a class="navbar-item" href="{{ path('home') }}">
             Home
           </a>
 
-          <a class="navbar-item">
+          <a class="navbar-item" href="{{ path('home') }}">
             Classified Cards
           </a>
 
@@ -56,6 +56,10 @@
               <a class="navbar-item">
                 Report an issue
               </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item" href="{{ path('easyadmin') }}">
+                Admin
+              </a>
             </div>
           </div>
         </div>
@@ -63,12 +67,18 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light">
-                Log in
-              </a>
+
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                  {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                  <a class="button is-light" href="{{ path('fos_user_security_logout') }}">
+                      {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                      {{ 'layout.logout'|trans }}
+                  </a>
+              {% else %}
+                  <a class="button is-primary" href="{{ path('fos_user_registration_register') }}"><strong>{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</strong></a>
+
+                  <a class="button is-light" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -77,6 +87,19 @@
     {% block hero %}{% endblock %}
     <section class="section">
       <div class="container">
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                <div class="notification is-warning">
+                <button class="delete"></button>
+                {{type}}
+                {{message}}
+                </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
         {% block body %}{% endblock %}
 
       </div>
