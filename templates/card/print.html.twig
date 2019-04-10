@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style  type="text/css">
+          @import url('https://fonts.googleapis.com/css?family=Patrick+Hand');
+          @page { margin: 2cm;}
+          html {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 34px;;
+          }
+          table {
+            width: 100%;
+          }
+          td {
+            text-align: center;
+          }
+          img {
+            width: 14cm;
+          }
+          footer {
+            position: fixed;
+            bottom: -60px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+
+            /** Extra personal styles **/
+            border: 1px solid #03a9f4;
+            text-align: center;
+            line-height: 30px;
+          }
+        </style>
+    </head>
+    <body>
+      <footer>
+        Illustrations téléchargées par ____
+      </footer>
+      <main>
+        {% for image in card.images %}
+        <table>
+          <tr>
+            <td>
+              <img src="uploads/images/{{image.name}}" alt="Image">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{image.label}}
+            </td>
+          </tr>
+        </table>
+        {% if not loop.last %}
+          <div style="page-break-after: always;"></div>
+        {% endif %}
+        {% endfor %}
+      </main>
+    </body>
+</html>
