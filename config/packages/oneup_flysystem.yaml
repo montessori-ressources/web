@@ -1,0 +1,15 @@
+# Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle/tree/master/Resources/doc/index.md
+oneup_flysystem:
+    adapters:
+        image_adapter:
+            local:
+                directory: '%kernel.project_dir%/public/uploads/images'
+        web.flysystem_adapter:
+            awss3v3:
+                client: web.s3_client
+                bucket: ~
+                prefix: ~
+    filesystems:
+        image_fs:
+            adapter: image_adapter
+            mount: image_fs
