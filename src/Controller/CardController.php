@@ -5,6 +5,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\ClassifiedCard;
+use App\Entity\Image;
+use Symfony\Component\HttpFoundation\Response;
+use League\Flysystem\Filesystem;
 
 // Include Dompdf required namespaces
 use Dompdf\Dompdf;
@@ -54,5 +57,15 @@ class CardController extends AbstractController
       $dompdf->stream("card.pdf", [
           "Attachment" => false
       ]);
+    }
+
+    /**
+     * @Route("/card/image/{id}", name="image")
+     */
+    public function image(Image $image, Filesystem $filesystem) {
+      //$this->get('oneup_flysystem.image_adapter');
+      $response = new Response($filesystem->read($image->getName()));
+      $response->headers->set('Content-Type', $filesystem->getMimetype($image->getName()));
+      return $response;
     }
 }

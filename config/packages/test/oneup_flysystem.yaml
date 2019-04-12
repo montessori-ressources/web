@@ -1,8 +1,8 @@
 # Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle/tree/master/Resources/doc/index.md
 oneup_flysystem:
     adapters:
-        image_adapter:
+        image:
             awss3v3:
                 client: web.s3_client
-                bucket: ~
+                bucket: montessori-web
                 prefix: ~

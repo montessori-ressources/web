@@ -25,6 +25,10 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    # the `fos_user.user_manager.default` service will be injected when
+    # a `FOS\UserBundle\Model\UserManager` type-hint is detected
+    League\Flysystem\Filesystem: '@image'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     web.s3_client:

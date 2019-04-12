@@ -32,13 +32,13 @@
       <article class="media">
         <div class="media-left">
           <figure class="image is-256x256">
-            <img src="uploads/images/{{image.name}}" alt="Image">
+            <img src="{{path('image', {'id': image.id})}}" alt="Image">
           </figure>
         </div>
         <div class="media-content">
           <div class="content">
             <p>
-              <strong>{{image.label}}</strong> <small>@johnsmith</small> <small>31m</small>
+              <strong>{{image.label}} {{image.id}}</strong> <small>@johnsmith</small> <small>31m</small>
               <br>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
             </p>
