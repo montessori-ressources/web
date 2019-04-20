@@ -1,0 +1,4 @@
+core23_dompdf:
+    defaults:
+        enable_remote: true
+        debug_layout: true

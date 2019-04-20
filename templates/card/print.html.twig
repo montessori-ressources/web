@@ -41,7 +41,8 @@
         <table>
           <tr>
             <td>
-              <img src="uploads/images/{{image.name}}" alt="Image">
+
+              <imgg src="{{url('image', {'id': image.id})}}" alt="Image">
             </td>
           </tr>
           <tr>
@@ -54,6 +55,12 @@
           <div style="page-break-after: always;"></div>
         {% endif %}
         {% endfor %}
+        {% if s3 == true %}
+        s3
+        {% else %}
+        local
+        {% endif %}
+        <img src="http://localhost:8000/card/image/74" />
       </main>
     </body>
 </html>

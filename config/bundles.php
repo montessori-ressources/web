@@ -19,4 +19,6 @@ return [
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     FOS\UserBundle\FOSUserBundle::class => ['all' => true],
     Oneup\FlysystemBundle\OneupFlysystemBundle::class => ['all' => true],
+    Core23\DompdfBundle\Core23DompdfBundle::class => ['all' => true],
+    TFox\MpdfPortBundle\TFoxMpdfPortBundle::class => ['all' => true],
 ];

@@ -3,3 +3,5 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes: ['forms/bulma_layout.html.twig']
+    globals:
+      s3: '%env(S3)%'

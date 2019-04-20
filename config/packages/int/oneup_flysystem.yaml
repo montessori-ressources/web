@@ -1,4 +1,3 @@
-# Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle/tree/master/Resources/doc/index.md
 oneup_flysystem:
     adapters:
         image:

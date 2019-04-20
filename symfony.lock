@@ -5,6 +5,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "core23/dompdf-bundle": {
+        "version": "2.5.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -166,8 +169,14 @@
     "monolog/monolog": {
         "version": "1.24.0"
     },
+    "mpdf/mpdf": {
+        "version": "v7.1.9"
+    },
     "mtdowling/jmespath.php": {
         "version": "2.4.0"
+    },
+    "myclabs/deep-copy": {
+        "version": "1.9.1"
     },
     "nikic/php-parser": {
         "version": "v4.2.1"
@@ -240,6 +249,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "setasign/fpdi": {
+        "version": "1.6.2"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.0"
@@ -594,6 +606,9 @@
     },
     "symfony/yaml": {
         "version": "v4.2.4"
+    },
+    "tfox/mpdf-port-bundle": {
+        "version": "2.0.0"
     },
     "twig/extensions": {
         "version": "1.0",

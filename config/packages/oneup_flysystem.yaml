@@ -3,7 +3,7 @@ oneup_flysystem:
     adapters:
         image:
             local:
-                directory: '%kernel.project_dir%/public/uploads/images'
+                directory: '%kernel.project_dir%/public%app.path.images%'
     filesystems:
         image_fs:
             adapter: image

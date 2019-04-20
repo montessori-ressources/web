@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     app.path.images: /uploads/images
+    env(S3): false
 
 services:
     # default configuration for services in *this* file
@@ -28,6 +29,7 @@ services:
     # the `fos_user.user_manager.default` service will be injected when
     # a `FOS\UserBundle\Model\UserManager` type-hint is detected
     League\Flysystem\Filesystem: '@image'
+    TFox\MpdfPortBundle\Service\PDFService: '@t_fox_mpdf_port.pdf'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
