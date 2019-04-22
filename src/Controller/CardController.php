@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Card;
 use App\Entity\ClassifiedCard;
 use App\Entity\Nomenclature;
+use App\Form\CardType;
 use App\Form\NomenclatureType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,9 +33,9 @@ class CardController extends AbstractController
     }
     
     /**
-     * @Route("/card/upload", name="card_upload")
+     * @Route("/nomenclature/upload", name="nomenclature_upload")
      */
-    public function upload(Request $request) {
+    public function uploadNomenclature(Request $request) {
 
         $nomenclature = new Nomenclature();
         $form = $this->createForm(NomenclatureType::Class,$nomenclature);
@@ -56,6 +58,36 @@ class CardController extends AbstractController
         ]);
 
     }
+
+
+    /**
+     * @Route("/card/upload", name="card_upload")
+     */
+    public function uploadCard(Request $request) {
+
+        $card = new Card();
+        $form = $this->createForm(CardType::Class,$card);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+           
+            $card = $form->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($card);
+            $entityManager->flush();
+
+            return $this->render('card/upload-success.html.twig');
+        }
+
+        return $this->render('card/upload.html.twig', [
+            'formNomenclature' => $form->createView(),
+        ]);
+
+    }
+
+
 
     /**
      * @Route("/card/{id}/download", name="card_download")

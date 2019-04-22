@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,11 @@ class Nomenclature
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Card", mappedBy="nomenclature")
+     */
+    private $cards;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +52,7 @@ class Nomenclature
 
     public function __construct() {
         $this->createdAt = new \DateTime('now');
+        $this->cards = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -55,6 +63,37 @@ class Nomenclature
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Card[]
+     */
+    public function getCards(): Collection
+    {
+        return $this->cards;
+    }
+
+    public function addCard(Card $card): self
+    {
+        if (!$this->cards->contains($card)) {
+            $this->cards[] = $card;
+            $card->setNomenclature($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCard(Card $card): self
+    {
+        if ($this->cards->contains($card)) {
+            $this->cards->removeElement($card);
+            // set the owning side to null (unless already changed)
+            if ($card->getNomenclature() === $this) {
+                $card->setNomenclature(null);
+            }
+        }
 
         return $this;
     }
