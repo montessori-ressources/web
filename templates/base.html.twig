@@ -29,8 +29,19 @@
           </a>
 
           <a class="navbar-item" href="{{ path('home') }}">
-            Classified Cards
+            
           </a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Nomenclature
+            </a>
+
+            <div class="navbar-dropdown">
+              <a href="{{ path('nomenclature_upload') }}" class="navbar-item">
+                Create a nomenclature
+              </a>
+            </div>
+          </div>
 
           <a class="navbar-item">
             Biblio

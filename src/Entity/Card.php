@@ -32,7 +32,7 @@ class Card
     private $descriptionWithGaps;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclature", inversedBy="cards")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Nomenclature", inversedBy="cards", cascade={"persist"})
      */
     private $nomenclature;
 

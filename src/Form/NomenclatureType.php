@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Nomenclature;
 use App\Form\CardType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,7 +18,12 @@ class NomenclatureType extends AbstractType
             //->add('createdAt')
             ->add('name')
             //->add('card', CardType::class, [])
-            ->add('save', SubmitType::class, ['label' => 'Create Nomenclature']);
+            ->add('cards', CollectionType::class, [
+                'entry_type' => CardType::class,
+                'allow_add' => true,
+                'by_reference' => false,
+            ])
+            ->add('save', SubmitType::class, ['label' => 'Create Nomenclature'])
         ;
     }
 

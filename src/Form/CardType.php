@@ -18,19 +18,14 @@ class CardType extends AbstractType
             ->add('label')
             ->add('description')
             ->add('descriptionWithGaps')
-            //->add('nomenclature')
+
+            /*
             ->add('nomenclature', EntityType::class, [
-                // looks for choices from this entity
                 'class' => Nomenclature::class,
-            
-                // uses the User.username property as the visible option string
                 'choice_label' => 'name',
-            
-                // used to render a select box, check boxes or radios
-                // 'multiple' => true,
-                // 'expanded' => true,
             ])
-            ->add('save', SubmitType::class, ['label' => 'Upload Cards']);
+            */
+            //->add('save', SubmitType::class, ['label' => 'Upload Cards']);
         ;
     }
 

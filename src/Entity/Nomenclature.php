@@ -29,7 +29,7 @@ class Nomenclature
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Card", mappedBy="nomenclature")
+     * @ORM\OneToMany(targetEntity="App\Entity\Card", mappedBy="nomenclature", cascade={"all"})
      */
     private $cards;
 
