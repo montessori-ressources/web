@@ -36,6 +36,12 @@ class Card
      */
     private $nomenclature;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Image", inversedBy="cards", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +91,18 @@ class Card
     public function setNomenclature(?Nomenclature $nomenclature): self
     {
         $this->nomenclature = $nomenclature;
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

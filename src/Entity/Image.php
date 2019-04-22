@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -22,7 +24,7 @@ class Image
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $label;
+    //private $label;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -42,11 +44,17 @@ class Image
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Card", mappedBy="image")
+     */
+    private $cards;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /*
     public function getLabel(): ?string
     {
         return $this->label;
@@ -56,7 +64,7 @@ class Image
     {
         $this->label = $label;
         return $this;
-    }
+    }*/
 
     public function getName()
     {
@@ -92,5 +100,37 @@ class Image
 
     public function __construct() {
       $this->updatedAt = new \DateTime('now');
+      $this->cards = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|Card[]
+     */
+    public function getCards(): Collection
+    {
+        return $this->cards;
+    }
+
+    public function addCard(Card $card): self
+    {
+        if (!$this->cards->contains($card)) {
+            $this->cards[] = $card;
+            $card->setImage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCard(Card $card): self
+    {
+        if ($this->cards->contains($card)) {
+            $this->cards->removeElement($card);
+            // set the owning side to null (unless already changed)
+            if ($card->getImage() === $this) {
+                $card->setImage(null);
+            }
+        }
+
+        return $this;
     }
 }

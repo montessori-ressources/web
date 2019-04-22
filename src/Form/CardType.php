@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Card;
 use App\Entity\Nomenclature;
+use App\Form\ImageCardType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,6 +17,7 @@ class CardType extends AbstractType
     {
         $builder
             ->add('label')
+            ->add('image', ImageCardType::class)
             ->add('description')
             ->add('descriptionWithGaps')
 
