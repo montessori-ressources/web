@@ -1,4 +1,14 @@
 easy_admin:
+    site_name: 'Montessori Ressources'
+    design:
+      menu:
+        - { label: 'Admin' }
+        - { entity: 'User', icon: 'user' }
+        - { label: 'Content' }
+        - { entity: 'Card', icon: 'square' }
+        - { entity: 'Image', icon: 'image' }
+        - { label: 'Links' }
+        - { label: 'Home', route: 'home', icon: 'home' }
     entities:
       Image:
         class: App\Entity\Image
@@ -23,3 +33,11 @@ easy_admin:
 #        - App\Entity\Product
 #        - App\Entity\Category
 #        - App\Entity\User
+      User:
+        class: App\Entity\User
+        list:
+          fields:
+            - username
+            - email
+            - enabled
+            - lastLogin

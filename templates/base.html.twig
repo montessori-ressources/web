@@ -56,10 +56,12 @@
               <a class="navbar-item">
                 Report an issue
               </a>
+              {% if is_granted("ROLE_ADMIN") %}
               <hr class="navbar-divider">
               <a class="navbar-item" href="{{ path('easyadmin') }}">
                 Admin
               </a>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -69,14 +71,11 @@
             <div class="buttons">
 
               {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                  {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
                   <a class="button is-light" href="{{ path('fos_user_security_logout') }}">
-                      {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                      {{ 'layout.logout'|trans }}
+                      {{ 'layout.logout'|trans({}, 'FOSUserBundle') }} ({{app.user.username}})
                   </a>
               {% else %}
                   <a class="button is-primary" href="{{ path('fos_user_registration_register') }}"><strong>{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</strong></a>
-
                   <a class="button is-light" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
               {% endif %}
             </div>
