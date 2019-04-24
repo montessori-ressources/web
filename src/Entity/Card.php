@@ -42,6 +42,11 @@ class Card
      */
     private $image;
 
+    public function __toString()
+    {
+      return $this->getLabel();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
