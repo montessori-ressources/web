@@ -5,6 +5,7 @@ easy_admin:
         - { label: 'Admin' }
         - { entity: 'User', icon: 'user' }
         - { label: 'Content' }
+        - { entity: 'Nomenclature', icon: 'square' }
         - { entity: 'Card', icon: 'square' }
         - { entity: 'Image', icon: 'image' }
         - { label: 'Links' }
