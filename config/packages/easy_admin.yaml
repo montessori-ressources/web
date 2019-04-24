@@ -6,19 +6,18 @@ easy_admin:
         list:
           fields:
             - { property: 'name', type: 'image', base_path: '%app.path.images%' }
-            - label
         # ...
         show:
           fields:
             - { property: 'name', type: 'image', base_path: '%app.path.images%' }
-            - label
         form:
           fields:
             - { property: 'file', type: 'vich_image' }
-            - label
 
       Card:
-        class: App\Entity\ClassifiedCard
+        class: App\Entity\Card
+      Nomenclature:
+        class: App\Entity\Nomenclature
 #        # List the entity class name you want to manage
 #        - App\Entity\Product
 #        - App\Entity\Category

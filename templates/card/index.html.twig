@@ -17,30 +17,30 @@
 
 {% block body %}
 <h1 class="title">
-  ClassifiedCards
+  Nomenclature
 </h1>
 <p class="subtitle">
-  List of <strong>ClassifiedCards</strong>!
+  List of <strong>Nomenclature</strong>!
 </p>
 <ul>
-  {% for card in cards %}
-  <li>Card {{card.id}}</li>
+  {% for nomenclature in nomenclatures %}
+  <li>{{nomenclature.name}} ({{nomenclature.id}})</li>
   <div class="columns is-multiline">
-  {% for image in card.images %}
+  {% for card in nomenclature.cards %}
   <div class="column is-half">
     <div class="box">
       <article class="media">
         <div class="media-left">
           <figure class="image is-256x256">
-            <img src="uploads/images/{{image.name}}" alt="Image">
+            <img src="uploads/images/{{card.image.name}}" alt="Image">
           </figure>
         </div>
         <div class="media-content">
           <div class="content">
             <p>
-              <strong>{{image.label}}</strong> <small>@johnsmith</small> <small>31m</small>
+              <strong>{{card.label}}</strong> <small>@johnsmith</small> <small>31m</small>
               <br>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+              {{ card.description }}
             </p>
           </div>
           <nav class="level is-mobile">
