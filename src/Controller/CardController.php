@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Card;
-use App\Entity\ClassifiedCard;
 use App\Entity\Nomenclature;
 use App\Form\CardType;
 use App\Form\NomenclatureType;
@@ -95,9 +94,9 @@ class CardController extends AbstractController
     /**
      * @Route("/card/{id}/download", name="card_download")
      */
-    public function download(ClassifiedCard $card) {
+    public function download(Nomenclature $nomenclature) {
       $html = $this->renderView('card/print.html.twig', [
-          'card' => $card,
+          'nomenclature' => $nomenclature,
       ]);
 
 
