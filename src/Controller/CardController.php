@@ -13,9 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Image;
 use Symfony\Component\HttpFoundation\Response;
 use League\Flysystem\Filesystem;
-use Core23\DompdfBundle\Wrapper\DompdfWrapper;
-use TFox\MpdfPortBundle\Response\PDFResponse;
-use TFox\MpdfPortBundle\Service\PDFService;
 
 // Include Dompdf required namespaces
 use Dompdf\Dompdf;
@@ -83,33 +80,12 @@ class CardController extends AbstractController
     }
 
     /**
-     * @Route("/card/{id}/download2", name="card_download2")
-     */
-    public function download2(Nomenclature $nomenclature) {
-      return $this->render('card/print.html.twig', [
-          'nomenclature' => $nomenclature,
-      ]);
-    }
-
-    /**
      * @Route("/card/{id}/download", name="card_download")
      */
-    public function download(Nomenclature $nomenclature, PDFService $service) {
+    public function download(Nomenclature $nomenclature) {
       $html = $this->renderView('card/print.html.twig', [
           'nomenclature' => $nomenclature,
       ]);
-      // try{
-      //   return new PDFResponse($service->generatePdf($html));
-      // } catch (\Mpdf\MpdfException $e) { // Note: safer fully qualified exception name used for catch
-      //   // Process the exception, log, print etc.
-      //   echo $e->getMessage();
-      //   return new Response("error " . $e->getMessage());
-      // }
-
-
-      // $response = $pdf->getStreamResponse($html, "card.pdf",
-      // ["Attachment" => false]);
-      // $response->send();
 
       $pdfOptions = new Options();
       //$pdfOptions->set('isRemoteEnabled', true);
@@ -137,15 +113,6 @@ class CardController extends AbstractController
      */
     public function image(Image $image, Filesystem $filesystem) {
       //$this->get('oneup_flysystem.image_adapter');
-      $response = new Response($filesystem->read($image->getName()));
-      $response->headers->set('Content-Type', $filesystem->getMimetype($image->getName()));
-      return $response;
-    }
-
-    /**
-     * @Route("/card/image2/{id}", name="image2")
-     */
-    public function image2(Image $image, Filesystem $filesystem) {
       $response = new Response($filesystem->read($image->getName()));
       $response->headers->set('Content-Type', $filesystem->getMimetype($image->getName()));
       return $response;
