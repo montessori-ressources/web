@@ -88,7 +88,7 @@ class CardController extends AbstractController
       ]);
 
       $pdfOptions = new Options();
-      //$pdfOptions->set('isRemoteEnabled', true);
+      $pdfOptions->set('isRemoteEnabled', true);
       //
       // Instantiate Dompdf with our options
       $dompdf = new Dompdf($pdfOptions);
