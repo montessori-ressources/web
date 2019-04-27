@@ -37,17 +37,20 @@
         Illustrations téléchargées par ____
       </footer>
       <main>
-        {% for image in card.images %}
+        {% for card in nomenclature.cards %}
         <table>
           <tr>
             <td>
-
-              <imgg src="{{url('image', {'id': image.id})}}" alt="Image">
+              {% if env == 'int' %}
+              <img src="{{url('image', {'id': card.image.id})}}" alt="Image">
+              {% else %}
+              <img src="/uploads/images/{{card.image.name}}" alt="Image">
+              {% endif %}
             </td>
           </tr>
           <tr>
             <td>
-              {{image.label}}
+              {{card.label}}
             </td>
           </tr>
         </table>
@@ -55,12 +58,7 @@
           <div style="page-break-after: always;"></div>
         {% endif %}
         {% endfor %}
-        {% if s3 == true %}
-        s3
-        {% else %}
-        local
-        {% endif %}
-        <img src="http://localhost:8000/card/image/74" />
+
       </main>
     </body>
 </html>
