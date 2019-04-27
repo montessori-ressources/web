@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 // Include Dompdf required namespaces
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -30,9 +32,10 @@ class CardController extends AbstractController
             'nomenclatures' => $nomenclatures,
         ]);
     }
-    
+
     /**
      * @Route("/nomenclature/upload", name="nomenclature_upload")
+     * @IsGranted("ROLE_USER")
      */
     public function uploadNomenclature(Request $request) {
 
@@ -45,7 +48,7 @@ class CardController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           
+
             $nomenclature = $form->getData();
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -64,6 +67,7 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/upload", name="card_upload")
+     * @IsGranted("ROLE_USER")
      */
     public function uploadCard(Request $request) {
 
@@ -73,7 +77,7 @@ class CardController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           
+
             $card = $form->getData();
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -93,6 +97,7 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/{id}/download", name="card_download")
+     * @IsGranted("ROLE_USER")
      */
     public function download(Nomenclature $nomenclature) {
       $html = $this->renderView('card/print.html.twig', [
