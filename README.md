@@ -57,10 +57,16 @@ A CI test build is launched automatically by Travis-CI at each commit.
 
 ## Deploy
 
-A preferred way to deploy the application is via a docker-like engine (Heroku,
-  Dokku, etc...).
+### Deploy on integration system
 
-TODO
+This app is setup to automatically deploy the `develop` branch on a Heroku application, using Travis CI. The setup is described [here](https://docs.travis-ci.com/user/deployment/heroku/).
+
+If you want to manually deploy on Heroku a specific branch (`my-specific-branch`) you can do that by the following commands:
+
+```
+heroku git:remote -a heroku-app-name # add the heroku remote
+git push heroku my-local-branch:master # push
+```
 
 ## Licence
 

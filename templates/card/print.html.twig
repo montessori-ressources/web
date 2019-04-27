@@ -44,7 +44,7 @@
               {% if env == 'int' %}
               <img src="{{url('image', {'id': card.image.id})}}" alt="Image">
               {% else %}
-              <img src="/uploads/images/{{card.image.name}}" alt="Image">
+              <img src="uploads/images/{{card.image.name}}" alt="Image">
               {% endif %}
             </td>
           </tr>
