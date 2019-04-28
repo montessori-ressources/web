@@ -1,0 +1,11 @@
+# Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle/tree/master/Resources/doc/index.md
+oneup_flysystem:
+    adapters:
+        image:
+            local:
+                directory: '%kernel.project_dir%/public%app.path.images%'
+    filesystems:
+        image_fs:
+            adapter: image
+            mount: image_fs
+            alias: image

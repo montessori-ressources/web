@@ -1,0 +1,7 @@
+oneup_flysystem:
+    adapters:
+        image:
+            awss3v3:
+                client: web.s3_client
+                bucket: montessori-web
+                prefix: ~
