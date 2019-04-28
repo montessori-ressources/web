@@ -27,3 +27,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    my.oauth_aware.user_provider.service:
+        class: App\Security\Core\User\MyFOSUBUserProvider
+        arguments:
+            - '@fos_user.user_manager'
+            - '@fos_user.util.token_generator'
+            - { facebook: facebook_id }

@@ -6,7 +6,7 @@
     {{ error.messageKey|trans(error.messageData, 'security') }}
     </div>
 {% endif %}
-
+<section class="section">
 <form action="{{ path("fos_user_security_check") }}" method="post">
     {% if csrf_token %}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -47,3 +47,20 @@
       </div>
     </div>
 </form>
+</section>
+<section class="section">
+<div class="buttons">
+  <a class="button" href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}">
+    <span class="icon">
+      <i class="fab fa-facebook"></i>
+    </span>
+    <span>Login with Facebook</span>
+  </a>
+  <a class="button" href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}">
+    <span class="icon">
+      <i class="fab fa-google"></i>
+    </span>
+    <span>Login with Google</span>
+  </a>
+</div>
+</section>
