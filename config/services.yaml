@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     app.path.images: /uploads/images
+    env(S3): false
 
 services:
     # default configuration for services in *this* file
@@ -25,5 +26,18 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    # the `fos_user.user_manager.default` service will be injected when
+    # a `FOS\UserBundle\Model\UserManager` type-hint is detected
+    League\Flysystem\Filesystem: '@image'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    web.s3_client:
+        class: Aws\S3\S3Client
+        arguments:
+            -
+                version: 'latest'
+                region: "eu-central-1"
+                credentials:
+                    key: '%env(S3_KEY)%'
+                    secret: '%env(S3_SECRET)%'

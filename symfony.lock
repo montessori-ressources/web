@@ -1,4 +1,7 @@
 {
+    "aws/aws-sdk-php": {
+        "version": "3.91.4"
+    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -139,20 +142,53 @@
     "fzaninotto/faker": {
         "version": "v1.8.0"
     },
+    "guzzlehttp/guzzle": {
+        "version": "6.3.3"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.5.2"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
     "jms/metadata": {
         "version": "2.0.0"
     },
+    "league/flysystem": {
+        "version": "1.0.51"
+    },
+    "league/flysystem-aws-s3-v3": {
+        "version": "1.0.22"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
+    },
+    "mtdowling/jmespath.php": {
+        "version": "2.4.0"
+    },
+    "myclabs/deep-copy": {
+        "version": "1.9.1"
     },
     "nikic/php-parser": {
         "version": "v4.2.1"
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "oneup/flysystem-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "0eb87bba411c227da027fe5f7c1dc7954b02f242"
+        },
+        "files": [
+            "config/packages/oneup_flysystem.yaml"
+        ]
     },
     "pagerfanta/pagerfanta": {
         "version": "v2.1.1"
@@ -178,6 +214,9 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/link": {
         "version": "1.0.0"
     },
@@ -186,6 +225,9 @@
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "ralouphie/getallheaders": {
+        "version": "2.0.5"
     },
     "sabberworm/php-css-parser": {
         "version": "8.1.0"
@@ -201,6 +243,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "setasign/fpdi": {
+        "version": "1.6.2"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.0"
@@ -555,6 +600,9 @@
     },
     "symfony/yaml": {
         "version": "v4.2.4"
+    },
+    "tfox/mpdf-port-bundle": {
+        "version": "2.0.0"
     },
     "twig/extensions": {
         "version": "1.0",
