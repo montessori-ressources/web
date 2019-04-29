@@ -1,0 +1,9 @@
+# config/packages/test/security.yaml
+security:
+    firewalls:
+        main:
+          pattern: ^/
+            # allow tests to use basic http auth for faster logins
+          http_basic:
+            provider: fos_userbundle
+          form_login: false

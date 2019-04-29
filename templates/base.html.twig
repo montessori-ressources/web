@@ -30,7 +30,7 @@
           </a>
 
           <a class="navbar-item" href="{{ path('home') }}">
-            
+
           </a>
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
@@ -38,9 +38,11 @@
             </a>
 
             <div class="navbar-dropdown">
+              {% if is_granted("ROLE_USER") %}
               <a href="{{ path('nomenclature_upload') }}" class="navbar-item">
                 Create a nomenclature
               </a>
+              {% endif %}
             </div>
           </div>
 

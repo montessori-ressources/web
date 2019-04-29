@@ -41,7 +41,11 @@
         <table>
           <tr>
             <td>
+              {% if env == 'int' %}
+              <img src="{{url('image', {'id': card.image.id})}}" alt="Image">
+              {% else %}
               <img src="uploads/images/{{card.image.name}}" alt="Image">
+              {% endif %}
             </td>
           </tr>
           <tr>
@@ -54,6 +58,7 @@
           <div style="page-break-after: always;"></div>
         {% endif %}
         {% endfor %}
+
       </main>
     </body>
 </html>

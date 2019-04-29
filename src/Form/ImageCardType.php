@@ -14,7 +14,7 @@ class ImageCardType extends AbstractType
     {
         $builder
             //->add('label')
-            ->add('name', FileType::class)
+            ->add('file', FileType::class)
         ;
     }
 
