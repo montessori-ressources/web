@@ -39,7 +39,7 @@ security:
                 resource_owners:
                     #vkontakte:           "/login/check-vkontakte"
                     facebook:            "/login/check-facebook"
-                    #google:              "/login/check-google"
+                    google:              "/login/check-google"
                     #twitter:             "/login/check-twitter"
                 login_path:        /login
                 #default_target_path: /my-custom-path

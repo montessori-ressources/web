@@ -39,5 +39,7 @@ easy_admin:
           fields:
             - username
             - email
+            - facebookId
+            - googleId
             - enabled
             - lastLogin

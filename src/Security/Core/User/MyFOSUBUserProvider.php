@@ -72,8 +72,8 @@ class MyFOSUBUserProvider extends BaseFOSUBProvider
             $password = substr($this->tokenGenerator->generateToken(), 0, 8); // 8 chars
             print($password);
             $user->setPlainPassword($password);
-            
-            $user->$setter_id($userId);
+
+            $user->$setter_id($response->getUsername());
             $user->$setter_token($response->getAccessToken());
 
             $this->userManager->updateUser($user);
