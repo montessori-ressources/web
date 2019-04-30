@@ -1,0 +1,8 @@
+# to disable oauth during tests
+services:
+    hwi_oauth.security.oauth_utils:
+      abstract: true
+    hwi_oauth.templating.helper.oauth:
+      abstract: true
+    hwi_oauth.twig.extension.oauth:
+      abstract: true
