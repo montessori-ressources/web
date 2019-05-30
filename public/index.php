@@ -22,6 +22,14 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? $_ENV['TRUSTED_HOSTS'] ?? false
 
 $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
 $request = Request::createFromGlobals();
+
+// special case for Heroku setup on int env
+if($_SERVER['APP_ENV'] === 'int') {
+  Request::setTrustedProxies(array($request->server->get('REMOTE_ADDR')), Request::HEADER_X_FORWARDED_ALL);
+  //Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);
+  //Request::setTrustedHeaderName(Request::HEADER_CLIENT_HOST, null);
+}
+
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);

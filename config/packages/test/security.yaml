@@ -7,3 +7,5 @@ security:
           http_basic:
             provider: fos_userbundle
           form_login: false
+          # disable oauth
+          oauth: false
