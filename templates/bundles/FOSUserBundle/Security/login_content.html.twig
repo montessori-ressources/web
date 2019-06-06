@@ -1,53 +1,58 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% if error %}
-    <div class="notification is-danger">
-    <button class="delete"></button>
-    {{ error.messageKey|trans(error.messageData, 'security') }}
+
+<section class="section">
+  <div class="container">
+    {% if error %}
+        <div class="notification is-danger">
+        <button class="delete"></button>
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    <div class="columns">
+      <div class="column">
+      <form action="{{ path("fos_user_security_check") }}" method="post">
+          {% if csrf_token %}
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+          {% endif %}
+
+          <div class="field">
+            <label class="label">{{ 'security.login.username'|trans }}</label>
+            <div class="control has-icons-left">
+              <input class="input" type="text" placeholder="{{ 'security.login.username'|trans }}" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username">
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">{{ 'security.login.password'|trans }}</label>
+            <div class="control has-icons-left">
+              <input class="input" type="password" placeholder="{{ 'security.login.password'|trans }}" id="password" name="_password"  required="required" autocomplete="current-password">
+              <span class="icon is-small is-left">
+                <i class="fas fa-key"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on">
+                {{ 'security.login.remember_me'|trans }}
+              </label>
+            </div>
+          </div>
+
+          <div class="field is-grouped">
+            <div class="control">
+              <input type="submit" class="button is-link" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}"/>
+            </div>
+          </div>
+      </form>
     </div>
-{% endif %}
-<div class="columns">
-  <div class="column">
-  <form action="{{ path("fos_user_security_check") }}" method="post">
-      {% if csrf_token %}
-          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-      {% endif %}
-
-      <div class="field">
-        <label class="label">{{ 'security.login.username'|trans }}</label>
-        <div class="control has-icons-left">
-          <input class="input" type="text" placeholder="{{ 'security.login.username'|trans }}" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username">
-          <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">{{ 'security.login.password'|trans }}</label>
-        <div class="control has-icons-left">
-          <input class="input" type="password" placeholder="{{ 'security.login.password'|trans }}" id="password" name="_password"  required="required" autocomplete="current-password">
-          <span class="icon is-small is-left">
-            <i class="fas fa-key"></i>
-          </span>
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox" id="remember_me" name="_remember_me" value="on">
-            {{ 'security.login.remember_me'|trans }}
-          </label>
-        </div>
-      </div>
-
-      <div class="field is-grouped">
-        <div class="control">
-          <input type="submit" class="button is-link" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}"/>
-        </div>
-      </div>
-  </form>
-</div>
-{% include '@FOSUser/social_login.html.twig' %}
-</div>
+    {% include '@FOSUser/social_login.html.twig' %}
+    </div>
+  </div>
+</section>

@@ -1,16 +1,20 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="columns">
-  <div class="column">
-    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-        {{ form_widget(form) }}
-        <div class="field is-grouped">
-          <div class="control">
-            <input type="submit" class="button is-link" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}"/>
-          </div>
-        </div>
-    {{ form_end(form) }}
-  </div>
-{% include '@FOSUser/social_login.html.twig' %}
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+            {{ form_widget(form) }}
+            <div class="field is-grouped">
+              <div class="control">
+                <input type="submit" class="button is-link" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}"/>
+              </div>
+            </div>
+        {{ form_end(form) }}
+      </div>
+    {% include '@FOSUser/social_login.html.twig' %}
 
-</div>
+    </div>
+  </div>
+</section>

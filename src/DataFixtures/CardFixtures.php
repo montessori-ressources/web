@@ -17,7 +17,7 @@ class CardFixtures extends Fixture
     {
       $faker = Faker\Factory::create('fr_FR');
 
-      for($c=0; $c<1; $c++) {
+      for($c=0; $c<5; $c++) {
         $nomenclature = new Nomenclature();
         $name = $faker->word;
         $nomenclature->setName($name);
@@ -56,7 +56,7 @@ class CardFixtures extends Fixture
       $card->setDescription($description);
       $card->setDescriptionWithGaps($description);
       $card->setImage($image);
-      
+
       return $card;
     }
 }
