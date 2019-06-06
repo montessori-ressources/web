@@ -45,6 +45,26 @@ Then you can start the local webserver and go on `http://localhost:8000` !
 bin/console server:run
 ```
 
+## Modify data model
+
+You can just modify `src/Entity/*` classes to edit the data model and links. Symfony
+provide a tool named `doctrine:schema:update` but we prefer on this project to use
+`doctrine:migrations:migrate` (it is [safer](https://symfony.com/doc/current/doctrine.html#migrations-creating-the-database-tables-schema))
+
+After your modification create your migration file:
+
+```
+bin/console make:migration
+```
+
+It will make the migration file.
+
+Then apply the migration files on your database:
+
+```
+bin/console doctrine:migrations:migrate
+```
+
 ## Test
 
 Run:
