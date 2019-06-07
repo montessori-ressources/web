@@ -40,9 +40,15 @@
         <span class="icon is-large is-pulled-right nomenclature-label">
           <i class="fas fa-check-circle fa-3x"></i>
         </span>
+
         <article class="media">
           <div class="media-left">
             <div class="thumbnails">
+
+              <span class="tag is-rounded is-large nomenclature-image-count">
+                {{nomenclature.cards|length}}
+              </span>
+
               {% for card in nomenclature.cards[0:4] %}
               <div class="thumbnail">
                 <img src="{{path('image', {'id': card.image.id})}}" alt="{{card.image.name}}" />
