@@ -5,8 +5,7 @@
     <div class="container">
         <h1 class="title">Create a Nomenclature</h1>
         <p>Complete the form below with all nomenclature.</p>
-        {{ form_start(formNomenclature) }}
-
+        {{ form_start(formNomenclature, {attr: {class: 'card-uploader'} }) }}
             <div class="help is-danger">
                 {{ form_errors(formNomenclature) }}
             </div>
@@ -14,37 +13,45 @@
             {{ form_row(formNomenclature.name) }}
 
 
+            <div class="cards">
 
-            {% for card in formNomenclature.cards %}
+                {% for card in formNomenclature.cards %}
 
-                <div class="card">
-                    {{ form_label(card.label) }}
-                    {{ form_widget(card.label, {'attr': {'class': 'label_field'}}) }}            
-
-                    {{ form_label(card.image) }}
-                    {{ form_widget(card.image, {'attr': {'class': 'label_field'}}) }}    
-
-                    <div class="columns">
-                        <div class="column">
-                            {{ form_label(card.description) }}
-                            {{ form_widget(card.description, {'attr': {'class': 'label_field'}}) }}    
+                    <fieldset class="classified-card">
+                        <legend>Card</legend>
+                        <div class="preview">
+                            <img>
                         </div>
-                        <div class="column">
-                            {{ form_label(card.descriptionWithGaps) }}
-                            {{ form_widget(card.descriptionWithGaps, {'attr': {'class': 'label_field'}}) }}    
+                        <div class="meta-data">
+                            <div class="field">
+                                {{ form_label(card.label) }}
+                                {{ form_widget(card.label, {'attr': {'class': 'label_field'}}) }}
+                            </div>
+                            <div class="field">
+                                {{ form_label(card.description) }}
+                                {{ form_widget(card.description, {'attr': {'class': 'label_field'}}) }}    
+                            </div>
+                            <div class="field">
+                                {{ form_label(card.descriptionWithGaps) }}
+                                {{ form_widget(card.descriptionWithGaps, {'attr': {'class': 'label_field'}}) }}   
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </fieldset>
+                {% endfor %}
+            </div>
 
-            {% endfor %}
-
-            <div class="cards" data-prototype="{{ form_widget(formNomenclature.cards.vars.prototype)|e('html_attr') }}"></div>                     
+            <!-- div class="cards" data-prototype="{{ form_widget(formNomenclature.cards.vars.prototype)|e('html_attr') }}"></div -->                     
         {{ form_end(formNomenclature) }}
     </div>
 </section>
 {% endblock %}
 {% block javascripts %}
+<!--
+<script src="/js/card-uploader.js"></script>
+<script src="/js/exif.js"></script>
+-->
 <script>
+/*
     var $collectionHolder;
     // setup an "add an image" button
     var $addCardButton = $('<button type="button" class="add_card_link">Add a new card</button>');
@@ -77,5 +84,6 @@
         var $newFormLi = $("<div class='card'></div>").append(newForm);
         $newLinkLi.before($newFormLi);
     }
+*/    
 </script>
 {% endblock %}
