@@ -13,34 +13,35 @@
             {{ form_row(formNomenclature.name) }}
 
 
-            <div class="cards">
+            <div class="xcards">
 
                 {% for card in formNomenclature.cards %}
 
                     <fieldset class="classified-card">
                         <legend>Card</legend>
                         <div class="preview">
-                            <img>
+                            {{ form_label(card.image) }}
+                            {{ form_widget(card.image) }}
                         </div>
                         <div class="meta-data">
                             <div class="field">
                                 {{ form_label(card.label) }}
-                                {{ form_widget(card.label, {'attr': {'class': 'label_field'}}) }}
+                                {{ form_widget(card.label) }}
                             </div>
                             <div class="field">
                                 {{ form_label(card.description) }}
-                                {{ form_widget(card.description, {'attr': {'class': 'label_field'}}) }}    
+                                {{ form_widget(card.description) }}    
                             </div>
                             <div class="field">
                                 {{ form_label(card.descriptionWithGaps) }}
-                                {{ form_widget(card.descriptionWithGaps, {'attr': {'class': 'label_field'}}) }}   
+                                {{ form_widget(card.descriptionWithGaps) }}   
                             </div>
                         </div>
                     </fieldset>
                 {% endfor %}
             </div>
 
-            <!-- div class="cards" data-prototype="{{ form_widget(formNomenclature.cards.vars.prototype)|e('html_attr') }}"></div -->                     
+            <div class="cards" data-prototype="{{ form_widget(formNomenclature.cards.vars.prototype)|e('html_attr') }}"></div>
         {{ form_end(formNomenclature) }}
     </div>
 </section>
@@ -51,7 +52,7 @@
 <script src="/js/exif.js"></script>
 -->
 <script>
-/*
+
     var $collectionHolder;
     // setup an "add an image" button
     var $addCardButton = $('<button type="button" class="add_card_link">Add a new card</button>');
@@ -84,6 +85,6 @@
         var $newFormLi = $("<div class='card'></div>").append(newForm);
         $newLinkLi.before($newFormLi);
     }
-*/    
+
 </script>
 {% endblock %}

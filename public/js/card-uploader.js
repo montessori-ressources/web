@@ -104,6 +104,16 @@ class CardUploader {
   }
 
   addCardDOM(card) {
+
+    // nomenclature[cards][0][image][file]
+    // nomenclature[cards][0][label]
+    // nomenclature[cards][0][description]
+    // nomenclature[cards][0][descriptionWithGaps]
+
+    // nomenclature[cards][1][image][file]
+    // nomenclature[cards][1][label]
+    // nomenclature[cards][1][description]
+    // nomenclature[cards][1][descriptionWithGaps]
      
     const metaData = document.createElement('div')
     metaData.className = 'meta-data'
