@@ -33,6 +33,12 @@ class Nomenclature
      */
     private $cards;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="nomenclatures")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $createdBy;
+
     public function __toString()
     {
       return $this->getName();
@@ -99,6 +105,18 @@ class Nomenclature
                 $card->setNomenclature(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }
