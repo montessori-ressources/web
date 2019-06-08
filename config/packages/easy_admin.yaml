@@ -8,31 +8,34 @@ easy_admin:
         - { entity: 'Nomenclature', icon: 'square' }
         - { entity: 'Card', icon: 'square' }
         - { entity: 'Image', icon: 'image' }
+        - { entity: 'ImageCategory', icon: 'image' }
         - { label: 'Links' }
         - { label: 'Home', route: 'home', icon: 'home' }
     entities:
       Image:
         class: App\Entity\Image
-        # ...
         list:
           fields:
             - { property: 'name', type: 'image', base_path: '%app.path.images%' }
-        # ...
+            - category
         show:
           fields:
             - { property: 'name', type: 'image', base_path: '%app.path.images%' }
+            - category
         form:
           fields:
             - { property: 'file', type: 'vich_image' }
+            - category
+
+      ImageCategory:
+        class: App\Entity\ImageCategory
 
       Card:
         class: App\Entity\Card
+
       Nomenclature:
         class: App\Entity\Nomenclature
-#        # List the entity class name you want to manage
-#        - App\Entity\Product
-#        - App\Entity\Category
-#        - App\Entity\User
+
       User:
         class: App\Entity\User
         list:
