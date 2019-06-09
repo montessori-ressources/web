@@ -50,6 +50,8 @@ class CardController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $nomenclature = $form->getData();
+            $currentUser= $this->getUser();
+            $nomenclature->setCreatedBy($currentUser);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($nomenclature);
             $entityManager->flush();
