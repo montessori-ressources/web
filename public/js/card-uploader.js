@@ -41,9 +41,9 @@ class CardUploader {
     btnAddCard.innerHTML = "Add a card"
     btnAddCard.addEventListener('click', addCard, false)
 
-    const field = document.createElement('field')
+    const field = document.createElement('div')
     field.className = "field"
-    field.append(btnAddCard)
+    field.append(btnAddCard)                                       
 
     return field
   }
@@ -120,23 +120,74 @@ class CardUploader {
    
     //console.log('add Card !' + this.aCardDOM)
 
-    var copy = this.aCardDOM.cloneNode(true)
-    /*
-    const nb = this.cards.length+1
-    copy = copy.replaceAll('nomenclature[cards][0][image][file]','nomenclature[cards][' + nb + '][image][file]')
-    copy = copy.replaceAll('nomenclature[cards][0][label]','nomenclature[cards][' + nb + '][label]')
-    copy = copy.replaceAll('nomenclature[cards][0][description]','nomenclature[cards][' + nb + '][description]')
-    copy = copy.replaceAll('nomenclature[cards][0][descriptionWithGaps]','nomenclature[cards][' + nb + '][descriptionWithGaps]')
-    */
+/*                        <fieldset class="classified-card">
+                            <legend>Card No X</legend>
+             cols1               <div class="columns">
+                col11                <div class="column is-one-quarter">
+                                    <div class="preview">
+                                        {{ form_label(card.image) }}
+                                        {{ form_widget(card.image) }}
+                                    </div>
+                                </div>
+                col12                <div class="column">
+                                  <div class="field">
+                                    {{ form_label(card.label) }}
+                                    {{ form_widget(card.label) }}
+                                  </div>
+                  cols2                        <div class="columns">
+                    cols21                            <div class="column">
+                                                <div class="field">
+                                                    {{ form_label(card.description) }}
+                                                    {{ form_widget(card.description) }}    
+                                                </div>
+                                            </div>
+                    cols22                            <div class="column">
+                                                <div class="field">
+                                                    {{ form_label(card.descriptionWithGaps) }}
+                                                    {{ form_widget(card.descriptionWithGaps) }}   
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                          </fieldset>*/
 
-    return copy
-/*    
-    const metaData = document.createElement('div')
-    metaData.className = 'meta-data'
-    metaData.append(this.createField('label-'+card.id, 'Label', 'input', card.label))
-    metaData.append(this.createField('description-'+card.id, 'Description', 'textarea', card.description))
+    
+    // meta data block 
+    const cols1= document.createElement('div')
+    cols1.className = 'columns'
 
-    const preview = this.createPreviewImage(card.image)
+    // the preview image
+    const col11 = document.createElement('div')
+    col11.className = 'column is-one-quarter'
+
+    cols1.append(col11)
+
+    const preview = this.createPreviewImage(card.id, card.image)
+    col11.append(preview)
+
+    const col12 = document.createElement('div')
+    col12.className = 'column'
+    col12.append(this.createField('label-'+card.id, 'Label', 'nomenclature[cards][' + card.id + '][label]', 'input', card.label))
+
+    // label + description + descripion with gaps
+    const cols2 = document.createElement('div')
+    cols2.className = 'columns'
+
+    const col21 = document.createElement('div')
+    col21.className = 'column'
+
+    col21.append(this.createField('description-'+card.id, 'Description', 'nomenclature[cards][' + card.id + '][description]', 'textarea', card.description))
+    
+    const col22 = document.createElement('div')
+    col22.className = 'column'
+    col22.append(this.createField('descriptionWithGaps-'+card.id, 'Description with Gaps', 'nomenclature[cards][' + card.id + '][descriptionWithGaps]', 'textarea', card.description))
+
+    cols2.append(col21)
+    cols2.append(col22)
+
+    col12.append(cols2)
+    cols1.append(col12)
 
     const legend = document.createElement('legend')
     legend.innerHTML = 'Card ' + card.id
@@ -145,25 +196,35 @@ class CardUploader {
     fieldset.className = 'classified-card'
 
     fieldset.append(legend)
-    fieldset.append(preview)
-    fieldset.append(metaData) 
+    fieldset.append(cols1) 
 
     return fieldset
-*/    
+
   }
 
-  createPreviewImage(image) {
+  /*
+      <div class="field">
+        <label class="label required" for="nomenclature_cards_0_image_file">File</label>
+        <div class="control">
+          <input type="file" id="nomenclature_cards_0_image_file" name="nomenclature[cards][0][image][file]" required="required">
+        </div>
+      </div>
+  */
+  createPreviewImage(id, image) {
+    const field = this.createField(id, 'Image', 'nomenclature[cards][' + id + '][image][file]','image')
+    /*
     const img = document.createElement('img')
     if(image != null && image != '' && image != undefined)
       img.src = image
+    */
 
     const container = document.createElement('div')
     container.className = 'preview'
-    container.append(img)
+    container.append(field)
     return container
   }
 
-  createField(id, name='', type, value='') {
+  createField(id, name='', fieldName='', type, value='') {
 
     // The label
     const label = document.createElement('label')
@@ -175,20 +236,30 @@ class CardUploader {
     switch (type) {
       case 'textarea':
         input = document.createElement('textarea')
+        input.className='textarea'
         break
+      case 'image':
+          input = document.createElement('input')
+          input.setAttribute('type', 'file')  
+          break      
       default:
         input = document.createElement('input')
         input.setAttribute('type', 'text')
+        input.className='input'
     }
 
     input.setAttribute('id', id)
-    input.setAttribute('name', id)
+    input.setAttribute('name', fieldName)
     input.value = value
 
     const field = document.createElement('div')
     field.className = 'field'
     field.append(label)
-    field.append(input)
+
+    const control = document.createElement('div')
+    control.className = 'control'
+    control.append(input)
+    field.append(control)
 
     return field
   }

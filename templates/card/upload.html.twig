@@ -19,32 +19,34 @@
                     {% for card in formNomenclature.cards %}
 
                         <fieldset class="classified-card">
-                            <legend>Card No X</legend>
+                            <legend>Card 0</legend>
 
-                            <div class="column">
-                                <div class="preview">
-                                    {{ form_label(card.image) }}
-                                    {{ form_widget(card.image) }}
+                            <div class="columns">
+                                <div class="column is-one-quarter">
+                                    <div class="preview">
+                                        {{ form_label(card.image) }}
+                                        {{ form_widget(card.image) }}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="column">
-                                <div class="meta-data">
-                                    <div class="field">
-                                        {{ form_label(card.label) }}
-                                        {{ form_widget(card.label) }}
-                                    </div>
-                                    <div class="column">
+                                <div class="column">
                                         <div class="field">
-                                            {{ form_label(card.description) }}
-                                            {{ form_widget(card.description) }}    
+                                            {{ form_label(card.label) }}
+                                            {{ form_widget(card.label) }}
                                         </div>
-                                    </div>
-                                    <div class="column">
-                                        <div class="field">
-                                            {{ form_label(card.descriptionWithGaps) }}
-                                            {{ form_widget(card.descriptionWithGaps) }}   
+                                        <div class="columns">
+                                            <div class="column">
+                                                <div class="field">
+                                                    {{ form_label(card.description) }}
+                                                    {{ form_widget(card.description) }}    
+                                                </div>
+                                            </div>
+                                            <div class="column">
+                                                <div class="field">
+                                                    {{ form_label(card.descriptionWithGaps) }}
+                                                    {{ form_widget(card.descriptionWithGaps) }}   
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                         </fieldset>
