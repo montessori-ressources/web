@@ -49,6 +49,11 @@ class Image
      */
     private $cards;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ImageCategory", inversedBy="images")
+     */
+    private $category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -130,6 +135,18 @@ class Image
                 $card->setImage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?ImageCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?ImageCategory $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

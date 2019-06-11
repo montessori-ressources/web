@@ -3,6 +3,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,9 +35,15 @@ class User extends BaseUser
 
     private $googleAccessToken;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Nomenclature", mappedBy="createdBy")
+     */
+    private $nomenclatures;
+
     public function __construct()
     {
         parent::__construct();
+        $this->nomenclatures = new ArrayCollection();
         // your own logic
     }
 
@@ -133,6 +141,37 @@ class User extends BaseUser
     public function setGoogleAccessToken($googleAccessToken)
     {
         $this->googleAccessToken = $googleAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Nomenclature[]
+     */
+    public function getNomenclatures(): Collection
+    {
+        return $this->nomenclatures;
+    }
+
+    public function addNomenclature(Nomenclature $nomenclature): self
+    {
+        if (!$this->nomenclatures->contains($nomenclature)) {
+            $this->nomenclatures[] = $nomenclature;
+            $nomenclature->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNomenclature(Nomenclature $nomenclature): self
+    {
+        if ($this->nomenclatures->contains($nomenclature)) {
+            $this->nomenclatures->removeElement($nomenclature);
+            // set the owning side to null (unless already changed)
+            if ($nomenclature->getCreatedBy() === $this) {
+                $nomenclature->setCreatedBy(null);
+            }
+        }
 
         return $this;
     }
