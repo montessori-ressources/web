@@ -5,54 +5,54 @@
     <div class="container">
         <h1 class="title">Create a Nomenclature</h1>
         <p>Complete the form below with all nomenclature.</p>
-        {{ form_start(formNomenclature, {attr: {class: 'card-uploader'} }) }}
-            <div class="help is-danger">
-                {{ form_errors(formNomenclature) }}
-            </div>
 
-            {{ form_row(formNomenclature.name) }}
+        <div class="card-uploader">
+            {{ form_start(formNomenclature, {attr: {class: 'card-uploader'} }) }}
+                <div class="help is-danger">
+                    {{ form_errors(formNomenclature) }}
+                </div>
 
+                {{ form_row(formNomenclature.name) }}
 
-            <div class="xcards">
+                <div class="cards">
 
-                {% for card in formNomenclature.cards %}
+                    {% for card in formNomenclature.cards %}
 
-                    <fieldset class="classified-card">
-                        <legend>Card</legend>
-                        <div class="preview">
-                            {{ form_label(card.image) }}
-                            {{ form_widget(card.image) }}
-                        </div>
-                        <div class="meta-data">
-                            <div class="field">
-                                {{ form_label(card.label) }}
-                                {{ form_widget(card.label) }}
+                        <fieldset class="classified-card">
+                            <legend>Card</legend>
+                            <div class="preview">
+                                {{ form_label(card.image) }}
+                                {{ form_widget(card.image) }}
                             </div>
-                            <div class="field">
-                                {{ form_label(card.description) }}
-                                {{ form_widget(card.description) }}    
+                            <div class="meta-data">
+                                <div class="field">
+                                    {{ form_label(card.label) }}
+                                    {{ form_widget(card.label) }}
+                                </div>
+                                <div class="field">
+                                    {{ form_label(card.description) }}
+                                    {{ form_widget(card.description) }}    
+                                </div>
+                                <div class="field">
+                                    {{ form_label(card.descriptionWithGaps) }}
+                                    {{ form_widget(card.descriptionWithGaps) }}   
+                                </div>
                             </div>
-                            <div class="field">
-                                {{ form_label(card.descriptionWithGaps) }}
-                                {{ form_widget(card.descriptionWithGaps) }}   
-                            </div>
-                        </div>
-                    </fieldset>
-                {% endfor %}
-            </div>
+                        </fieldset>
+                    {% endfor %}
+                </div>
 
-            <div class="cards" data-prototype="{{ form_widget(formNomenclature.cards.vars.prototype)|e('html_attr') }}"></div>
-        {{ form_end(formNomenclature) }}
+                <!-- div class="cards" data-prototype="{{ form_widget(formNomenclature.cards.vars.prototype)|e('html_attr') }}"></div -->
+            {{ form_end(formNomenclature) }}
+        </div>
     </div>
 </section>
 {% endblock %}
 {% block javascripts %}
-<!--
-<script src="/js/card-uploader.js"></script>
-<script src="/js/exif.js"></script>
--->
+    <script src="/js/card-uploader.js"></script>
+    <script src="/js/exif.js"></script>
 <script>
-
+/*
     var $collectionHolder;
     // setup an "add an image" button
     var $addCardButton = $('<button type="button" class="add_card_link">Add a new card</button>');
@@ -66,9 +66,34 @@
         // index when inserting a new item (e.g. 2)
         $collectionHolder.data('index', $collectionHolder.find(':input').length);
         $addCardButton.on('click', function(e) {
-            addImageForm($collectionHolder, $newLinkLi);
+            //addImageForm($collectionHolder, $newLinkLi);
+
+            //console.log('try to copy existing card')
+            //console.log($('.classified-card')[0].innerHTML)
+
+            const xcards = $('.xcards')
+            const x = $('.classified-card')[0].innerHTML
+
+            var nx = "";
+            for (var step = 0; step < 5; step++) {
+                nx = x.replaceAll('nomenclature[cards][0][image][file]','nomenclature[cards]['+step+'][image][file]')
+                nx = nx.replaceAll('nomenclature[cards][0][label]','nomenclature[cards]['+step+'][label]')
+                nx = nx.replaceAll('nomenclature[cards][0][description]','nomenclature[cards]['+step+'][description]')
+                nx = nx.replaceAll('nomenclature[cards][0][descriptionWithGaps]','nomenclature[cards]['+step+'][descriptionWithGaps]')
+                xcards.append(nx)
+            }
         });
     });
+
+    //String.prototype.replaceAll = function(search, replacement) {
+    //    var target = this;
+    //    return target.replace(new RegExp(search, 'g'), replacement);
+    //};
+
+    String.prototype.replaceAll = function(search, replacement) {
+        var target = this;
+        return target.split(search).join(replacement);
+    };
 
     function addImageForm($collectionHolder, $newLinkLi) {
         // Get the data-prototype explained earlier
@@ -85,6 +110,6 @@
         var $newFormLi = $("<div class='card'></div>").append(newForm);
         $newLinkLi.before($newFormLi);
     }
-
+*/
 </script>
 {% endblock %}

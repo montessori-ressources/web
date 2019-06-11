@@ -14,12 +14,15 @@ class CardUploader {
       
       this.cards = new Array()
 
-      this.cardsDOM.innerHTML = "";
+      // A Card (.classified-card)
+      this.aCardDOM = this.cardsDOM.querySelector('.classified-card')
 
-      // Drag and DRop Zone
-      this.area = this.createDropArea()
+      //this.cardsDOM.innerHTML = "";
 
-      uploadCardElm.insertBefore(this.area,uploadCardElm.firstChild);
+      // Drag and Drop Zone
+      //this.area = this.createDropArea()
+
+      //uploadCardElm.insertBefore(this.area,uploadCardElm.firstChild);
 
       // Add the add card button
       this.cardsDOM.append(this.addCardButton())
@@ -57,7 +60,7 @@ class CardUploader {
     card.description = _description
     card.image = _image
     this.cards.push(card)
-    this.cardsDOM.append(this.addCardDOM(card))
+    this.cardsDOM.appendChild(this.addCardDOM(card))
   }
 
   /**
@@ -114,7 +117,20 @@ class CardUploader {
     // nomenclature[cards][1][label]
     // nomenclature[cards][1][description]
     // nomenclature[cards][1][descriptionWithGaps]
-     
+   
+    //console.log('add Card !' + this.aCardDOM)
+
+    var copy = this.aCardDOM.cloneNode(true)
+    /*
+    const nb = this.cards.length+1
+    copy = copy.replaceAll('nomenclature[cards][0][image][file]','nomenclature[cards][' + nb + '][image][file]')
+    copy = copy.replaceAll('nomenclature[cards][0][label]','nomenclature[cards][' + nb + '][label]')
+    copy = copy.replaceAll('nomenclature[cards][0][description]','nomenclature[cards][' + nb + '][description]')
+    copy = copy.replaceAll('nomenclature[cards][0][descriptionWithGaps]','nomenclature[cards][' + nb + '][descriptionWithGaps]')
+    */
+
+    return copy
+/*    
     const metaData = document.createElement('div')
     metaData.className = 'meta-data'
     metaData.append(this.createField('label-'+card.id, 'Label', 'input', card.label))
@@ -133,6 +149,7 @@ class CardUploader {
     fieldset.append(metaData) 
 
     return fieldset
+*/    
   }
 
   createPreviewImage(image) {
@@ -191,6 +208,7 @@ class Card {
     this.id = id+1
     this.label = ''
     this.description = ''
+    this.descriptionWithGaps = ''
     this.image = null;
   }
 
@@ -296,4 +314,9 @@ function uploadFile(file) {
   })
   .catch(() => { console.log('Unable to uplad the file...') })
 }
+
+String.prototype.replaceAll = function(search, replacement) {
+  var target = this;
+  return target.split(search).join(replacement);
+};
 /* End drag and drop image code */
