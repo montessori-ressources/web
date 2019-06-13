@@ -30,15 +30,15 @@
             Home
           </a>
 
-          <a class="navbar-item" href="{{ path('home') }}">
-
-          </a>
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
+            <a class="navbar-link" href="{{ path('card_index') }}">
               Nomenclature
             </a>
 
             <div class="navbar-dropdown">
+              <a href="{{ path('card_index') }}" class="navbar-item">
+                Index
+              </a>
               {% if is_granted("ROLE_USER") %}
               <a href="{{ path('nomenclature_upload') }}" class="navbar-item">
                 Create a nomenclature
@@ -68,7 +68,7 @@
                 Contact
               </a>
               <hr class="navbar-divider">
-              <a class="navbar-item">
+              <a class="navbar-item" href="https://github.com/montessori-ressources/web/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">
                 Report an issue
               </a>
               {% if is_granted("ROLE_ADMIN") %}
@@ -115,7 +115,21 @@
       {% endif %}
     </div>
 
+    <!-- body -->
     {% block body %}{% endblock %}
+
+    <!-- footer -->
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Montessori Ressources</strong> by <a href="https://www.montessori.quebec/">Montessori au Québec</a>. The source code is available on
+          <a href="https://github.com/montessori-ressources/web">github</a>. The website content
+          is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+        </p>
+      </div>
+    </footer>
+
+    <!-- javascript -->
     <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', () => {
 

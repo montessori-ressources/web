@@ -23,7 +23,7 @@ use Dompdf\Options;
 class CardController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/card/", name="card_index")
      */
     public function index() {
       $nomenclatures = $this->getDoctrine()
