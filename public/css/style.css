@@ -41,3 +41,18 @@
   width: 100%;
   height: auto;
 }
+
+/********************************************/
+/* Card uploader                            */
+/********************************************/
+.card-uploader .drop-area {
+  border:2px dashed #ccc;
+  height:200px;
+  overflow: hidden;
+  position: relative;
+  width:100%;
+}
+
+.card-uploader .drop-area.highlight {
+  background-color: blanchedalmond;  /* rgb(234, 238, 12); */
+}

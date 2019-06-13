@@ -42,8 +42,10 @@ class CardController extends AbstractController
      */
     public function uploadNomenclature(Request $request) {
         $nomenclature = new Nomenclature();
-        $card = new Card();
-        $nomenclature->addCard($card);
+        for ($i = 0; $i < 4; $i++) {
+            $card = new Card();
+            $nomenclature->addCard($card);
+        }
         $form = $this->createForm(NomenclatureType::Class,$nomenclature);
 
         $form->handleRequest($request);

@@ -10,19 +10,17 @@ class CardUploader {
 
     this.cardsDOM = uploadCardElm.querySelector('.cards')
 
-    if(this.cardsDOM != null) { // if no card, don't display anything
+    if(this.cardsDOM != null) {
       
       this.cards = new Array()
 
       // A Card (.classified-card)
-      this.aCardDOM = this.cardsDOM.querySelector('.classified-card')
-
-      //this.cardsDOM.innerHTML = "";
+      //this.aCardDOM = this.cardsDOM.querySelector('.classified-card') // can be used to create structure copy
 
       // Drag and Drop Zone
-      //this.area = this.createDropArea()
+      this.area = this.createDropArea()
 
-      //uploadCardElm.insertBefore(this.area,uploadCardElm.firstChild);
+      uploadCardElm.insertBefore(this.area,uploadCardElm.firstChild);
 
       // Add the add card button
       this.cardsDOM.append(this.addCardButton())
@@ -83,7 +81,7 @@ class CardUploader {
 
     // field block
     const fDropArea = document.createElement('div')
-    fDropArea.className = 'field field-file'
+    fDropArea.className = 'field field-file drop-area'
 
     ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
       fDropArea.addEventListener(eventName, preventDefaults, false)   
@@ -106,53 +104,27 @@ class CardUploader {
     return fDropArea
   }
 
+  /** 
+   * 
+   * TODO: Create DOM structure based on the existing structure inthe page (copy, not from scratch) 
+   * 
+   * */
   addCardDOM(card) {
 
-    // nomenclature[cards][0][image][file]
-    // nomenclature[cards][0][label]
-    // nomenclature[cards][0][description]
-    // nomenclature[cards][0][descriptionWithGaps]
-
-    // nomenclature[cards][1][image][file]
-    // nomenclature[cards][1][label]
-    // nomenclature[cards][1][description]
-    // nomenclature[cards][1][descriptionWithGaps]
-   
-    //console.log('add Card !' + this.aCardDOM)
-
-/*                        <fieldset class="classified-card">
-                            <legend>Card No X</legend>
-             cols1               <div class="columns">
-                col11                <div class="column is-one-quarter">
-                                    <div class="preview">
-                                        {{ form_label(card.image) }}
-                                        {{ form_widget(card.image) }}
-                                    </div>
-                                </div>
-                col12                <div class="column">
-                                  <div class="field">
-                                    {{ form_label(card.label) }}
-                                    {{ form_widget(card.label) }}
-                                  </div>
-                  cols2                        <div class="columns">
-                    cols21                            <div class="column">
-                                                <div class="field">
-                                                    {{ form_label(card.description) }}
-                                                    {{ form_widget(card.description) }}    
-                                                </div>
-                                            </div>
-                    cols22                            <div class="column">
-                                                <div class="field">
-                                                    {{ form_label(card.descriptionWithGaps) }}
-                                                    {{ form_widget(card.descriptionWithGaps) }}   
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                          </fieldset>*/
-
+    console.log('add a card...')
     
+    // try to retreive existing card (nomenclature_cards_<id>_image_file)
+    this.currentCard = this.cardsDOM.querySelector('#nomenclature_cards_' + card.id + '_image_file')
+
+    console.log('the file value: ' + currentCard.id)
+
+  }
+
+  updateExistingCardDOM(card) {
+    console.log('udate existing card')
+  }
+
+  addNewCardDOM(card) {
     // meta data block 
     const cols1= document.createElement('div')
     cols1.className = 'columns'
@@ -202,24 +174,16 @@ class CardUploader {
 
   }
 
-  /*
-      <div class="field">
-        <label class="label required" for="nomenclature_cards_0_image_file">File</label>
-        <div class="control">
-          <input type="file" id="nomenclature_cards_0_image_file" name="nomenclature[cards][0][image][file]" required="required">
-        </div>
-      </div>
-  */
   createPreviewImage(id, image) {
     const field = this.createField(id, 'Image', 'nomenclature[cards][' + id + '][image][file]','image')
-    /*
-    const img = document.createElement('img')
+    
+    const imgField = document.createElement('img')
     if(image != null && image != '' && image != undefined)
-      img.src = image
-    */
+      imgField.src = image
 
     const container = document.createElement('div')
     container.className = 'preview'
+    container.append(imgField)
     container.append(field)
     return container
   }
@@ -274,7 +238,6 @@ class CardUploader {
 }
 
 class Card {
-
   constructor(id) {
     this.id = id+1
     this.label = ''
@@ -285,6 +248,7 @@ class Card {
 
 }
 
+/** TODO Remove useless global functions !!! */
 document.documentElement.classList.add('html-js');
 
 const cardUploader = new CardUploader(document.querySelector('.card-uploader'))
@@ -310,20 +274,30 @@ function preventDefaults (e) {
 
 function handleDrop(e) {
   var dt = e.dataTransfer
-  var files = dt.files
+
+  console.log('number of files to transfer:' + dt.files.length)
+//  for(var i=0; i< dt.files.length;i++) {
+   const i = 0;
+    var tmpDT = new DataTransfer()
+    tmpDT.items.add(dt.files.item(i))
+    console.log('image name: ' + dt.files.item(i).name)
+
+    //var targetFile = document.querySelector('#nomenclature_cards_0_image_file')
+    //targetFile.files = tmpDT.files
+    //console.log('target name' + targetFile.files[0].name)
+
+//    this.preview(dt.files.item(i))WRONG !!!
+
+//  }
+
+  //var files = dt.files
 
   // hide the text and display the loading
-  handleFiles(files)
-}
-
-function handleFiles(files) {
-
-  files = [...files]
-  //files.forEach(uploadFile)
-  files.forEach(previewFile)
+  //handleFiles(files)
 }
 
 function previewFile(file) {  
+  console.log('preview the file !!')
   let reader = new FileReader()
   reader.readAsDataURL(file)
   reader.onloadend = function() {
@@ -332,15 +306,22 @@ function previewFile(file) {
     let label = ''
     let description = ''
 
+    /*
     // TODO: GEt EXIF description // only when the image is loaded !!!
     EXIF.getData(reader.result, function() {
         description = EXIF.getTag(this, 'ImageDescription');
     });
+    */
 
-    label = file.name.split('.').slice(0, -1).join('.');
+    label = getLabel(file.name)
     cardUploader.addCard(label, description, reader.result)
   }
   
+}
+
+function getLabel(filename) {
+  let label = filename.split('.').slice(0, -1).join('.').replaceAll('_', ' ');
+  return label
 }
 
 function uploadFile(file, i) {
