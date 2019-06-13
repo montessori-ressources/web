@@ -23,7 +23,7 @@
     </h1>
     <div class="columns is-centered">
       <div class="column is-half">
-        <input class="input is-large" type="text" placeholder="Search">
+        <input id="search" class="input is-large" type="text" placeholder="Search">
       </div>
     </div>
   </div>
@@ -32,118 +32,67 @@
 
 <section class="section">
 <div class="container">
-  <div class="columns is-multiline">
+  <div id="entitiesNav" class="columns is-multiline">
   {% for nomenclature in nomenclatures %}
-    <div class="column is-half-widescreen">
-      <div class="box">
-
-        <span class="icon is-large is-pulled-right nomenclature-label">
-          <i class="fas fa-check-circle fa-3x"></i>
-        </span>
-
-        <article class="media">
-          <div class="media-left">
-            <div class="thumbnails">
-
-              <span class="tag is-rounded is-large nomenclature-image-count">
-                {{nomenclature.cards|length}}
-              </span>
-
-              {% for card in nomenclature.cards[0:4] %}
-              <div class="thumbnail">
-                <img src="{{path('image', {'id': card.image.id})}}" alt="{{card.image.name}}" />
-              </div>
-              {% endfor %}
-            </div>
-            {% if is_granted("ROLE_USER") %}
-            <a href="{{path('card_download', {'id': nomenclature.id})}}" class="button">
-              Download
-            </a>
-            {% endif %}
-          </div>
-          <div class="media-content">
-            <h2 class="title is-2">{{nomenclature.name}}</h2>
-            <small>By {{ nomenclature.createdBy.username }}</small>
-            <div class="tags">
-              <span class="tag">Gospel</span>
-              <span class="tag">Chant</span>
-              <span class="tag">Religieux</span>
-            </div>
-
-            <div class="columns">
-              <div class="column">
-                <!-- State -->
-                <div class="field is-grouped is-grouped-multiline">
-                  <div class="control">
-                    <div class="tags has-addons">
-                      <span class="tag is-dark">Images</span>
-                      <span class="tag is-success">Yes</span>
-                    </div>
-                  </div>
-
-                  <div class="control">
-                    <div class="tags has-addons">
-                      <span class="tag is-dark">Label</span>
-                      <span class="tag is-success">Yes</span>
-                    </div>
-                  </div>
-
-                  <div class="control">
-                    <div class="tags has-addons">
-                      <span class="tag is-dark">Description</span>
-                      <span class="tag is-success">Yes</span>
-                    </div>
-                  </div>
-
-                  <div class="control">
-                    <div class="tags has-addons">
-                      <span class="tag is-dark">Text with gaps</span>
-                      <span class="tag is-danger">No</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="column">
-                <nav class="level is-mobile">
-                  <div class="level-left">
-                    <a class="level-item" aria-label="reply">
-                      <span class="icon is-small">
-                        <i class="fas fa-reply" aria-hidden="true"></i>
-                      </span>
-                    </a>
-                    <a class="level-item" aria-label="like">
-                      <span class="icon is-small">
-                        <i class="fas fa-heart" aria-hidden="true"></i>
-                      </span>
-                    </a>
-                  </div>
-                </nav>
-              </div>
-            </div>
-            <!-- Count -->
-            <nav class="level">
-              <div class="level-item has-text-centered">
-                <div>
-                  <p class="heading">Downloads</p>
-                  <p class="title is-5">3,456</p>
-                </div>
-              </div>
-              <div class="level-item has-text-centered">
-                <div>
-                  <p class="heading">Like</p>
-                  <p class="title is-5">123</p>
-                </div>
-              </div>
-            </nav>
-
-
-
-          </div>
-        </article>
-      </div>
-    </div>
+  {{ render(controller(
+      'App\\Controller\\CardController::show',
+      { 'id': nomenclature.id }
+  )) }}
   {% endfor %}
   </div>
 </div>
 </section>
+{% endblock %}
+
+
+{% block javascripts %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        var searchRequest = null;
+        $("#search").keyup(function() {
+            var minlength = 3;
+            var that = this;
+            var value = $(this).val();
+            var entitySelector = $("#entitiesNav").html('');
+            if (value.length >= minlength ) {
+                if (searchRequest != null)
+                    searchRequest.abort();
+                searchRequest = $.ajax({
+                    type: "GET",
+                    url: "{{ path('card_search') }}",
+                    data: {
+                        'q' : value
+                    },
+                    dataType: "text",
+                    success: function(msg){
+                        //we need to check if the value is the same
+                        if (value==$(that).val()) {
+                            var result = JSON.parse(msg);
+                            $.each(result, function(key, arr) {
+                                $.each(arr, function(id, value) {
+                                    if (key == 'entities') {
+                                        if (id != 'error') {
+                                          $.ajax({
+                                              type: "GET",
+                                              url: "{{ path('nomenclature_show') }}",
+                                              data: {
+                                                  'q' : id
+                                              },
+                                              success: function(msg){
+                                                entitySelector.append(msg);
+                                               }
+                                          });
+                                        } else {
+                                            entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                     }
+                });
+            }
+        });
+    });
+</script>
 {% endblock %}

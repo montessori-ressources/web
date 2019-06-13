@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Image;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use League\Flysystem\Filesystem;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -119,9 +120,40 @@ class CardController extends AbstractController
      * @Route("/card/image/{id}", name="image")
      */
     public function image(Image $image, Filesystem $filesystem) {
-      //$this->get('oneup_flysystem.image_adapter');
       $response = new Response($filesystem->read($image->getName()));
       $response->headers->set('Content-Type', $filesystem->getMimetype($image->getName()));
       return $response;
+    }
+
+    /**
+     * @Route("/card/search", name="card_search")
+     * Search
+     */
+    public function search(Request $request) {
+      $requestString = $request->get('q');
+      $entities =  $this->getDoctrine()->getRepository(Nomenclature::class)->search($requestString);
+
+      if(!$entities) {
+          $result['entities']['error'] = "No result";
+      } else {
+        foreach ($entities as $entity){
+          $result['entities'][$entity->getId()] = $entity->getName();
+        }
+      }
+      return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/nomenclature", name="nomenclature_show", defaults={"id"=0})
+     * Search
+     */
+    public function show(String $id, Request $request) {
+      if($id == 0) {
+        $id = $request->get('q');
+      }
+      $nomenclature = $this->getDoctrine()->getRepository(Nomenclature::class)->findOneById($id);
+      return $this->render('card/show.html.twig', [
+          'nomenclature' => $nomenclature,
+      ]);
     }
 }
