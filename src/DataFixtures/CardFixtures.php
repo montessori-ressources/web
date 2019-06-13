@@ -49,17 +49,17 @@ class CardFixtures extends Fixture implements DependentFixtureInterface
 
       // the card image
       $image = new Image();
-      
-      $filename = $faker->image(sys_get_temp_dir(), 400, 400, null);
-      if (empty($file)) {
-        $filename = __DIR__.'/../../public/img/Cc.logo.white.svg';
-        //$filename = "/home/babs/Images/2705-wuwei-gnu-meditate.jpg"; // temp when no internet connection
-      }
-        $mimetype = MimeTypeGuesser::getInstance()->guess($filename);
-        $size     = filesize($filename);
-        $file = new UploadedFile($filename, basename($filename), $mimetype, $size, null, true);
-        $image->setFile($file);
-      
+
+      // take a random file from tests/img
+      $files = glob(__DIR__.'/../../tests/img/*.*');
+      $file = array_rand($files);
+      $filename = $files[$file];
+
+      $mimetype = MimeTypeGuesser::getInstance()->guess($filename);
+      $size     = filesize($filename);
+      $file = new UploadedFile($filename, basename($filename), $mimetype, $size, null, true);
+      $image->setFile($file);
+
       $card->setLabel($label);
       $card->setDescription($description);
       $card->setDescriptionWithGaps($description);
