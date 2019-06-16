@@ -18,12 +18,7 @@
 <section class="section">
 <div class="container">
   <div id="entitiesNav" class="columns is-multiline">
-  {% for nomenclature in nomenclatures %}
-  {{ render(controller(
-      'App\\Controller\\CardController::show',
-      { 'id': nomenclature.id }
-  )) }}
-  {% endfor %}
+    <!-- Nomenclatures will come here via Ajax searching -->
   </div>
 </div>
 </section>
@@ -34,12 +29,21 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var searchRequest = null;
-        $("#search").keyup(function() {
-            var minlength = 3;
-            var that = this;
-            var value = $(this).val();
-            var entitySelector = $("#entitiesNav").html('');
-            if (value.length >= minlength ) {
+        var timeout = null;
+
+        // the search function
+        var search = () => {
+          var value = $("#search").val();
+
+          // Clear the timeout if it has already been set.
+          // This will prevent the previous task from executing
+          // if it has been less than <MILLISECONDS>
+          clearTimeout(timeout);
+          var entitySelector = $("#entitiesNav").html('<div class="loader"></div>');
+          // Make a new timeout set to go off in 500ms
+          timeout = setTimeout(function () {
+              console.log('Input Value:', value);
+              var entitySelector = $("#entitiesNav").html('');
                 if (searchRequest != null)
                     searchRequest.abort();
                 searchRequest = $.ajax({
@@ -50,34 +54,38 @@
                     },
                     dataType: "text",
                     success: function(msg){
-                        //we need to check if the value is the same
-                        if (value==$(that).val()) {
-                            var result = JSON.parse(msg);
-                            $.each(result, function(key, arr) {
-                                $.each(arr, function(id, value) {
-                                    if (key == 'entities') {
-                                        if (id != 'error') {
-                                          $.ajax({
-                                              type: "GET",
-                                              url: "{{ path('nomenclature_show') }}",
-                                              data: {
-                                                  'q' : id
-                                              },
-                                              success: function(msg){
-                                                entitySelector.append(msg);
-                                               }
-                                          });
-                                        } else {
-                                            entitySelector.append('<li class="errorLi">'+value+'</li>');
-                                        }
-                                    }
-                                });
-                            });
-                        }
+
+                      var result = JSON.parse(msg);
+                      $.each(result, function(key, arr) {
+                          $.each(arr, function(id, value) {
+                              if (key == 'entities') {
+                                  if (id != 'error') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "{{ path('nomenclature_show') }}",
+                                        data: {
+                                            'q' : id
+                                        },
+                                        success: function(msg){
+                                          entitySelector.append(msg);
+                                         }
+                                    });
+                                  } else {
+                                      entitySelector.append('<div class="notification">'+value+'</li>');
+                                  }
+                              }
+                          });
+                      });
                      }
                 });
-            }
-        });
+          }, 500);
+        };
+
+        // setup the search on typing in search box
+        $("#search").keyup(search);
+
+        // call search once at startup
+        search();
     });
 </script>
 {% endblock %}

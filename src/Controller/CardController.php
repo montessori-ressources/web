@@ -27,13 +27,8 @@ class CardController extends AbstractController
      * @Route("/card/", name="card_index")
      */
     public function index() {
-      $nomenclatures = $this->getDoctrine()
-        ->getRepository(Nomenclature::class)
-        ->findAll();
 
         return $this->render('card/index.html.twig', [
-            'controller_name' => 'CardController',
-            'nomenclatures' => $nomenclatures,
         ]);
     }
 
