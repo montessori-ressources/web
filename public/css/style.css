@@ -45,14 +45,47 @@
 /********************************************/
 /* Card uploader                            */
 /********************************************/
-.card-uploader .drop-area {
-  border:2px dashed #ccc;
-  height:200px;
-  overflow: hidden;
-  position: relative;
-  width:100%;
+
+.drag-zone {
+  border:5px dotted #ccc;
+  font-family: Arial, Helvetica, sans-serif;  
+  padding: 0;
+  margin: 24px 24px 24px 0;
 }
 
-.card-uploader .drop-area.highlight {
-  background-color: blanchedalmond;  /* rgb(234, 238, 12); */
+.drag-zone .file-label {
+  padding: 48px;
+  text-align: center;
+}
+
+.drag-zone .icon {
+  background-color: #fff;
+  color:#ccc;
+}
+
+.drag-zone .main-text {
+  font-size: 1.5rem;
+}
+
+.drag-zone .small-text {
+  font-size: 0.8rem;
+}
+
+/* Highlight Drag zone*/
+.drag-zone.highlight {
+  border-color: #000
+}
+
+.drag-zone.highlight .icon {
+  color: #000
+}
+
+.control input[type='file'] {
+  /*display:none;*/
+} 
+
+.preview-box .preview {
+  border:2px solid #000;
+  width:200px;
+  height:200px;
 }

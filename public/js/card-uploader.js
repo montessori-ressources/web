@@ -23,16 +23,24 @@ class CardUploader {
       uploadCardElm.insertBefore(this.area,uploadCardElm.firstChild);
 
       // Add the add card button
-      this.cardsDOM.append(this.addCardButton())
+      //append(this.addCardButton())
+
+      this.initCards()
     }
   }
 
-  /*initCards() {
-    for(var i=0; i<this.cards.length; i++) {
-      this.cardsDOM.append(this.addCardDOM(this.cards[i]))
-    }
-  }*/
+  initCards() {
 
+    // Add preview image for each existing card
+    const existingCards = document.querySelectorAll('.classified-card')
+    for(var i=0; i<existingCards.length; i++) {
+      const previewImg = document.createElement('img')
+      previewImg.setAttribute('id', 'image-'+ i)
+      previewImg.className = "preview"
+      existingCards[i].querySelector('.preview-box').append(previewImg)
+    }
+  }
+/*
   addCardButton() {
     const btnAddCard = document.createElement('button')
     btnAddCard.setAttribute('id', 'btn-add-card')
@@ -45,7 +53,8 @@ class CardUploader {
 
     return field
   }
-
+*/
+  /*
   addCard(){ 
     const id = this.cards.length
     console.log('cards length:' + id)
@@ -63,28 +72,31 @@ class CardUploader {
     this.cardsDOM.appendChild(this.addCardDOM(card))
     this.cards.push(card)
   }
+*/
 
   /**
    * Create the drop area element (input file and label)
    */
   createDropArea() {
 
-    // set the label
-    const lblDropArea = document.createElement('label')
-    lblDropArea.setAttribute('for', 'classified-card-1-image')
-    lblDropArea.className = 'label-image'
-    lblDropArea.innerHTML = "Drag n' drop your image here...";
-
-    // set the input file
-    const iDropArea = document.createElement('input')
-    iDropArea.setAttribute('id', 'classified-card-1-image')
-    iDropArea.setAttribute('type', 'file')
-    iDropArea.setAttribute('name', 'classified-card-images[]')
-    iDropArea.className = 'input-file'
+    /** Begin Bulma file upload */
+    const bulmaFile = `
+      <label class="file-label">
+        <input id="massiveUpload" class="file-input" type="file" name="resume">
+        <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span class="file-label">
+            Add images
+          </span>
+        </span>
+      </label>`
+    /** End Bulma file upload */
 
     // field block
     const fDropArea = document.createElement('div')
-    fDropArea.className = 'field field-file drop-area'
+    fDropArea.className = 'drag-zone'
 
     ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
       fDropArea.addEventListener(eventName, preventDefaults, false)   
@@ -99,19 +111,20 @@ class CardUploader {
       fDropArea.addEventListener(eventName, unhighlight, false)
     })
     
-    fDropArea.addEventListener('drop', handleDrop, false)
-    
+    fDropArea.addEventListener('drop', this.handleDragDrop, false)
 
-    fDropArea.append(lblDropArea, iDropArea)
-
+    fDropArea.innerHTML = bulmaFile
     return fDropArea
   }
 
-  /** 
-   * 
-   * TODO: Create DOM structure based on the existing structure inthe page (copy, not from scratch) 
-   * 
-   * */
+  handleDragDrop(e) {
+    var dt = e.dataTransfer  
+    theUpload(dt)
+  }
+
+  /*
+
+   // TODO: Create DOM structure based on the existing structure inthe page (copy, not from scratch) 
   addCardDOM(card) {
 
     console.log('add a card...'+card.id)
@@ -234,7 +247,7 @@ class CardUploader {
 
     return field
   }
-
+*/
   highlight(){
     this.area.classList.add('highlight')
   }
@@ -242,6 +255,7 @@ class CardUploader {
   unhighlight() {
     this.area.classList.remove('highlight')
   }
+
 }
 
 class Card {
@@ -254,7 +268,69 @@ class Card {
   }
 }
 
-/** TODO Remove useless global functions !!! */
+function theUpload(dataTemplate) {
+  var files = dataTemplate.files
+  console.log('number of files to transfer:' + files.length)
+  
+  for(let i=0; i<files.length; i++) {
+      var tmpDT = new DataTransfer()
+      tmpDT.items.add(dataTemplate.files.item(i)) // 1st file
+      updateImageDisplay(tmpDT.files, i)
+  }
+}
+
+function updateImageDisplay(files, imgID) {
+
+  // FileReader support
+  if (FileReader && files && files.length) {
+      var fr = new FileReader();
+      fr.onload = function () {
+          let currImg = document.getElementById('image-'+imgID)
+
+          if(currImg === undefined || currImg === null) {
+              console.log('create a new element !!')
+          } else {
+              currImg.src = fr.result;
+              const descItem = 'nomenclature_cards_'+imgID+'_description'
+              //console.log('get description')
+              getImageDetails(currImg, descItem)
+              
+              // Set the input file value
+              let currFile = document.getElementById('nomenclature_cards_'+imgID+'_image_file')
+              currFile.files = files;
+          }
+      }
+      fr.readAsDataURL(files[0]);
+  }
+
+  // Not supported
+  else {
+      // fallback -- perhaps submit the input to an iframe and temporarily store
+      // them on the server until the user's session ends.
+      console.log('not supported')
+  }
+}
+
+function getDescription(item) {
+  return function() {
+      
+      var description = EXIF.getTag(this, 'ImageDescription');
+      var allMetaDataSpan = document.getElementById(item);
+      allMetaDataSpan.value = JSON.stringify(description, null, "\t")
+      //allMetaDataSpan.innerHTML = JSON.stringify(description, null, "\t");
+  }
+}
+
+function getImageDetails(currImg, param) {
+  //var currImg = document.getElementById("image-1");
+  EXIF.getData(currImg, getDescription(param));
+}
+
+
+
+
+
+// TODO Remove useless global functions !!!
 document.documentElement.classList.add('html-js');
 
 const cardUploader = new CardUploader(document.querySelector('.card-uploader'))
@@ -267,13 +343,15 @@ function unhighlight(e) {
   cardUploader.unhighlight()
 }
 
-function addCard(e) {
-  cardUploader.addCard()
+function preventDefaults (e) {
   e.preventDefault()
   e.stopPropagation()
 }
 
-function preventDefaults (e) {
+
+/*
+function addCard(e) {
+  cardUploader.addCard()
   e.preventDefault()
   e.stopPropagation()
 }
@@ -320,12 +398,10 @@ function previewFile(file) {
     let label = ''
     let description = ''
 
-    /*
     // TODO: GEt EXIF description // only when the image is loaded !!!
-    EXIF.getData(reader.result, function() {
-        description = EXIF.getTag(this, 'ImageDescription');
-    });
-    */
+    //EXIF.getData(reader.result, function() {
+    //    description = EXIF.getTag(this, 'ImageDescription');
+    //});
 
     label = getLabel(file.name)
     cardUploader.addCard(label, description, reader.result)
@@ -376,13 +452,15 @@ function uploadFile(file) {
   })
   .then(() => { 
     updateProgress(i, 100) // <- Add this
-    /* Done. Inform the user */
+    // Done. Inform the user
   })
   .catch(() => { console.log('Unable to uplad the file...') })
-}
 
+}
+*/
 String.prototype.replaceAll = function(search, replacement) {
   var target = this;
   return target.split(search).join(replacement);
 };
+
 /* End drag and drop image code */
