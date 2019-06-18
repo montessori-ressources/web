@@ -46,19 +46,22 @@ class CardUploader {
     return field
   }
 
-  addCard(){
-    const card = new Card(this.cards.length)
-    this.cards.push(card)
+  addCard(){ 
+    const id = this.cards.length
+    console.log('cards length:' + id)
+    const card = new Card(id)
     this.cardsDOM.append(this.addCardDOM(card))
+    this.cards.push(card)
   }
 
   addCard(_label, _description, _image){
-    const card = new Card(this.cards.length)
+    const id = this.cards.length
+    const card = new Card(id)
     card.label = _label
     card.description = _description
     card.image = _image
-    this.cards.push(card)
     this.cardsDOM.appendChild(this.addCardDOM(card))
+    this.cards.push(card)
   }
 
   /**
@@ -111,13 +114,17 @@ class CardUploader {
    * */
   addCardDOM(card) {
 
-    console.log('add a card...')
+    console.log('add a card...'+card.id)
     
     // try to retreive existing card (nomenclature_cards_<id>_image_file)
     this.currentCard = this.cardsDOM.querySelector('#nomenclature_cards_' + card.id + '_image_file')
+    if(this.currentCard === undefined) {
+      console.log('Create a new block')
+      
+    } else {
+      console.log('Update the existing block' + this.currentCard.id)
 
-    console.log('the file value: ' + currentCard.id)
-
+    }
   }
 
   updateExistingCardDOM(card) {
@@ -239,13 +246,12 @@ class CardUploader {
 
 class Card {
   constructor(id) {
-    this.id = id+1
+    this.id = id
     this.label = ''
     this.description = ''
     this.descriptionWithGaps = ''
     this.image = null;
   }
-
 }
 
 /** TODO Remove useless global functions !!! */
@@ -290,11 +296,19 @@ function handleDrop(e) {
 
 //  }
 
-  //var files = dt.files
+  var files = dt.files
 
   // hide the text and display the loading
-  //handleFiles(files)
+  handleFiles(files)
 }
+
+function handleFiles(files) {
+
+  files = [...files]
+  //files.forEach(uploadFile)
+  files.forEach(previewFile)
+}
+
 
 function previewFile(file) {  
   console.log('preview the file !!')
