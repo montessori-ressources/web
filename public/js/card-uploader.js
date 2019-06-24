@@ -1,6 +1,25 @@
 "use strict";
 
+String.prototype.replaceAll = function(search, replacement) {
+  var target = this;
+  return target.split(search).join(replacement);
+};
+
 class CardUploader {
+
+
+/*
+  handleChangeOneFiles(input) {
+    input.addEventListener('change', this.handleChangeOne);
+  }
+  
+  handleChangeOne(e) {
+    e.preventDefault()
+    console('handle change one')
+    //    var tgt = e.target || window.event.srcElement,               
+    //    updateImageDisplay(tgt.files, i)
+  }
+*/
 
   /**
    * @param {*} uploadForm Require a form to load the input file 
@@ -14,16 +33,16 @@ class CardUploader {
       
       this.cards = new Array()
 
-      // A Card (.classified-card)
-      //this.aCardDOM = this.cardsDOM.querySelector('.classified-card') // can be used to create structure copy
-
       // Drag and Drop Zone
-      this.area = this.createDropArea()
+      //this.area = this.createDropArea()
+      //uploadCardElm.insertBefore(this.area,uploadCardElm.firstChild);
 
-      uploadCardElm.insertBefore(this.area,uploadCardElm.firstChild);
+      // Add event on all input file
+      const inputFiles = uploadCardElm.querySelectorAll('input[type="file"]')
+      inputFiles.forEach(handleDrop)
 
       // Add the add card button
-      //append(this.addCardButton())
+      this.cardsDOM.after(this.addCardButton())
 
       this.initCards()
     }
@@ -38,9 +57,13 @@ class CardUploader {
       previewImg.setAttribute('id', 'image-'+ i)
       previewImg.className = "preview"
       existingCards[i].querySelector('.preview-box').append(previewImg)
+
+      // add an empty card in the array
+      const card = new Card(i)
+      this.cards.push(card)
     }
   }
-/*
+
   addCardButton() {
     const btnAddCard = document.createElement('button')
     btnAddCard.setAttribute('id', 'btn-add-card')
@@ -53,8 +76,7 @@ class CardUploader {
 
     return field
   }
-*/
-  /*
+  
   addCard(){ 
     const id = this.cards.length
     console.log('cards length:' + id)
@@ -72,7 +94,6 @@ class CardUploader {
     this.cardsDOM.appendChild(this.addCardDOM(card))
     this.cards.push(card)
   }
-*/
 
   /**
    * Create the drop area element (input file and label)
@@ -82,7 +103,7 @@ class CardUploader {
     /** Begin Bulma file upload */
     const bulmaFile = `
       <label class="file-label">
-        <input id="massiveUpload" class="file-input" type="file" name="resume">
+        <input id="massiveUpload" class="file-input" type="file" name="resume" multiple />
         <span class="file-cta">
           <span class="file-icon">
             <i class="fas fa-upload"></i>
@@ -112,6 +133,7 @@ class CardUploader {
     })
     
     fDropArea.addEventListener('drop', this.handleDragDrop, false)
+    fDropArea.addEventListener('change', this.handleDrop);
 
     fDropArea.innerHTML = bulmaFile
     return fDropArea
@@ -122,132 +144,47 @@ class CardUploader {
     theUpload(dt)
   }
 
-  /*
+  updateLabel(aLabel, id) {
+    var attr = aLabel.getAttribute('for')
+    if(attr !== null) {
+      const numberPattern = /\d+/g;
+      attr = attr.replaceAll(numberPattern,id)
+      aLabel.setAttribute('for', attr)  
+    }
+  }
 
-   // TODO: Create DOM structure based on the existing structure inthe page (copy, not from scratch) 
+  // TODO: Create DOM structure based on the existing structure inthe page (copy, not from scratch) 
   addCardDOM(card) {
 
-    console.log('add a card...'+card.id)
-    
-    // try to retreive existing card (nomenclature_cards_<id>_image_file)
-    this.currentCard = this.cardsDOM.querySelector('#nomenclature_cards_' + card.id + '_image_file')
-    if(this.currentCard === undefined) {
-      console.log('Create a new block')
-      
-    } else {
-      console.log('Update the existing block' + this.currentCard.id)
+    const id = card.id
 
+    // 1st Card (.classified-card)
+    const firstCardDOM = this.cardsDOM.querySelector('.classified-card') // can be used to create structure copy
+    var clonedCard = firstCardDOM.cloneNode(true)
+
+    // set input image id (nomenclature_cards_0_image_file)
+    clonedCard.querySelector('#nomenclature_cards_0_image_file').setAttribute('id','nomenclature_cards_' + id + '_image_file')
+
+    // set preview id (image-0)
+    clonedCard.querySelector('#image-0').setAttribute('id','image-' + id)
+
+    // set input label id (nomenclature_cards_0_label)
+    clonedCard.querySelector('#nomenclature_cards_0_label').setAttribute('id','nomenclature_cards_' + id + '_label')
+
+    // set textarea description id (nomenclature_cards_0_description)
+    clonedCard.querySelector('#nomenclature_cards_0_description').setAttribute('id','nomenclature_cards_' + id + '_description')
+
+    // set textarea descriptionWithGaps id (nomenclature_cards_0_descriptionWithGaps)
+    clonedCard.querySelector('#nomenclature_cards_0_descriptionWithGaps').setAttribute('id','nomenclature_cards_' + id + '_descriptionWithGaps')
+
+    // set all the labels ids
+    var labels = clonedCard.querySelectorAll('.label')
+    for (var i = 0; i < labels.length; i++) {
+      this.updateLabel(labels[i], id)
     }
+    return clonedCard
   }
 
-  updateExistingCardDOM(card) {
-    console.log('udate existing card')
-  }
-
-  addNewCardDOM(card) {
-    // meta data block 
-    const cols1= document.createElement('div')
-    cols1.className = 'columns'
-
-    // the preview image
-    const col11 = document.createElement('div')
-    col11.className = 'column is-one-quarter'
-
-    cols1.append(col11)
-
-    const preview = this.createPreviewImage(card.id, card.image)
-    col11.append(preview)
-
-    const col12 = document.createElement('div')
-    col12.className = 'column'
-    col12.append(this.createField('label-'+card.id, 'Label', 'nomenclature[cards][' + card.id + '][label]', 'input', card.label))
-
-    // label + description + descripion with gaps
-    const cols2 = document.createElement('div')
-    cols2.className = 'columns'
-
-    const col21 = document.createElement('div')
-    col21.className = 'column'
-
-    col21.append(this.createField('description-'+card.id, 'Description', 'nomenclature[cards][' + card.id + '][description]', 'textarea', card.description))
-    
-    const col22 = document.createElement('div')
-    col22.className = 'column'
-    col22.append(this.createField('descriptionWithGaps-'+card.id, 'Description with Gaps', 'nomenclature[cards][' + card.id + '][descriptionWithGaps]', 'textarea', card.description))
-
-    cols2.append(col21)
-    cols2.append(col22)
-
-    col12.append(cols2)
-    cols1.append(col12)
-
-    const legend = document.createElement('legend')
-    legend.innerHTML = 'Card ' + card.id
-
-    const fieldset = document.createElement('fieldset')
-    fieldset.className = 'classified-card'
-
-    fieldset.append(legend)
-    fieldset.append(cols1) 
-
-    return fieldset
-
-  }
-
-  createPreviewImage(id, image) {
-    const field = this.createField(id, 'Image', 'nomenclature[cards][' + id + '][image][file]','image')
-    
-    const imgField = document.createElement('img')
-    if(image != null && image != '' && image != undefined)
-      imgField.src = image
-
-    const container = document.createElement('div')
-    container.className = 'preview'
-    container.append(imgField)
-    container.append(field)
-    return container
-  }
-
-  createField(id, name='', fieldName='', type, value='') {
-
-    // The label
-    const label = document.createElement('label')
-    label.setAttribute('for', id)
-    label.innerHTML = name
-
-    // The input
-    let input = null
-    switch (type) {
-      case 'textarea':
-        input = document.createElement('textarea')
-        input.className='textarea'
-        break
-      case 'image':
-          input = document.createElement('input')
-          input.setAttribute('type', 'file')  
-          break      
-      default:
-        input = document.createElement('input')
-        input.setAttribute('type', 'text')
-        input.className='input'
-    }
-
-    input.setAttribute('id', id)
-    input.setAttribute('name', fieldName)
-    input.value = value
-
-    const field = document.createElement('div')
-    field.className = 'field'
-    field.append(label)
-
-    const control = document.createElement('div')
-    control.className = 'control'
-    control.append(input)
-    field.append(control)
-
-    return field
-  }
-*/
   highlight(){
     this.area.classList.add('highlight')
   }
@@ -267,6 +204,17 @@ class Card {
     this.image = null;
   }
 }
+
+function handleDrop(e) {
+  /*
+  e.preventDefault()
+  var tgt = e.target || window.event.srcElement,
+  files = tgt.files;                
+  theUpload(tgt)
+  */
+  console.log('Handle error')
+}
+
 
 function theUpload(dataTemplate) {
   var files = dataTemplate.files
@@ -326,10 +274,6 @@ function getImageDetails(currImg, param) {
   EXIF.getData(currImg, getDescription(param));
 }
 
-
-
-
-
 // TODO Remove useless global functions !!!
 document.documentElement.classList.add('html-js');
 
@@ -348,14 +292,12 @@ function preventDefaults (e) {
   e.stopPropagation()
 }
 
-
-/*
 function addCard(e) {
   cardUploader.addCard()
   e.preventDefault()
   e.stopPropagation()
 }
-
+/*
 function handleDrop(e) {
   var dt = e.dataTransfer
 
@@ -458,9 +400,5 @@ function uploadFile(file) {
 
 }
 */
-String.prototype.replaceAll = function(search, replacement) {
-  var target = this;
-  return target.split(search).join(replacement);
-};
 
 /* End drag and drop image code */
