@@ -13,9 +13,9 @@
 
             {{ form_row(formNomenclature.name) }}
             
-            Choose a langue:
             {{ form_row(formNomenclature.language) }}
-            ---------------------       
+            {{ form_row(formNomenclature.type) }}
+            {{ form_row(formNomenclature.mode) }}
 
 
             {% for card in formNomenclature.cards %}
