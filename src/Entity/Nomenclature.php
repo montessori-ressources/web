@@ -39,6 +39,12 @@ class Nomenclature
      */
     private $createdBy;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="nomenclatures")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $language;
+
     public function __toString()
     {
       return $this->getName();
@@ -117,6 +123,18 @@ class Nomenclature
     public function setCreatedBy(?User $createdBy): self
     {
         $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Language $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }

@@ -12,14 +12,18 @@
             </div>
 
             {{ form_row(formNomenclature.name) }}
-
+            
+            Choose a langue:
+            {{ form_row(formNomenclature.language) }}
+            ---------------------       
 
 
             {% for card in formNomenclature.cards %}
 
                 <div class="card">
                     {{ form_label(card.label) }}
-                    {{ form_widget(card.label, {'attr': {'class': 'label_field'}}) }}            
+                    {{ form_widget(card.label, {'attr': {'class': 'label_field'}}) }}     
+
 
                     {{ form_label(card.image) }}
                     {{ form_widget(card.image, {'attr': {'class': 'label_field'}}) }}    

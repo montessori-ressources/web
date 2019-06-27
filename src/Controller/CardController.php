@@ -50,8 +50,17 @@ class CardController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $nomenclature = $form->getData();
+
+            // assign the nomenclature to the current user
             $currentUser= $this->getUser();
             $nomenclature->setCreatedBy($currentUser);
+
+            // set card language with the same language as the nomenclature
+            $nomLang = $nomenclature->getLanguage(); 
+            foreach ($nomenclature->getCards() as $card){
+                $card->setLanguage($nomLang);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($nomenclature);
             $entityManager->flush();

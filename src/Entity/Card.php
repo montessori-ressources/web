@@ -42,6 +42,12 @@ class Card
      */
     private $image;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $language;
+
     public function __toString()
     {
       return $this->getLabel();
@@ -108,6 +114,18 @@ class Card
     public function setImage(?Image $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Language $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }

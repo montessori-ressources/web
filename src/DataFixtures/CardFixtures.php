@@ -1,6 +1,7 @@
 <?php
 
 namespace App\DataFixtures;
+use App\DataFixtures\LanguageFixtures;
 use App\DataFixtures\UserFixtures;
 use App\Entity\ClassifiedCard;
 use App\Entity\Card;
@@ -25,6 +26,7 @@ class CardFixtures extends Fixture implements DependentFixtureInterface
         $name = $faker->word;
         $nomenclature->setName($name);
         $nomenclature->setCreatedBy($this->getReference(UserFixtures::SIMPLE_USER_REFERENCE));
+        //$nomenclature->setLanguage($this->getReference(LanguageFixtures::FRENCH_REFERENCE));
 
         // add at least 4 cards
         $card_count = $faker->numberBetween(4,9);
@@ -33,7 +35,9 @@ class CardFixtures extends Fixture implements DependentFixtureInterface
           $card = $this->generateCard( $faker);
           $nomenclature->addCard($card);
         }
+        $nomenclature->setLanguage($this->getReference(LanguageFixtures::FRENCH_REFERENCE));
         $manager->persist($nomenclature);
+
       }
 
         $manager->flush();
@@ -65,12 +69,16 @@ class CardFixtures extends Fixture implements DependentFixtureInterface
       $card->setDescriptionWithGaps($description);
       $card->setImage($image);
 
+      // Add default language
+      $card->setLanguage($this->getReference(LanguageFixtures::FRENCH_REFERENCE));
+
       return $card;
     }
 
     public function getDependencies()
     {
         return array(
+          LanguageFixtures::class,
           UserFixtures::class,
         );
     }
