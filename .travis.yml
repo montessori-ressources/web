@@ -1,8 +1,8 @@
 language: php
 install:
 - composer install
-- bin/console doctrine:schema:create
-- php bin/console doctrine:fixtures:load -n --env=test
+- bin/console doctrine:migrations:migrate -n
+- bin/console doctrine:fixtures:load -n --env=test
 - "./bin/phpunit install"
 script:
 - "./bin/phpunit"
