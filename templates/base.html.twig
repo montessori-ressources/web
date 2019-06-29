@@ -40,6 +40,10 @@
                 Index
               </a>
               {% if is_granted("ROLE_USER") %}
+              <a href="{{ path('nomenclature_user') }}" class="navbar-item">
+                My Nomenclature
+              </a>
+
               <a href="{{ path('nomenclature_upload') }}" class="navbar-item">
                 Create a nomenclature
               </a>

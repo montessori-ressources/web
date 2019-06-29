@@ -37,10 +37,62 @@ class CardController extends AbstractController
     }
 
     /**
+     * @Route("/nomenclature/user", name="nomenclature_user")
+     * @IsGranted("ROLE_USER")
+     */
+    public function cardsUser() {
+        $user = $this->getUser()->getId();
+        $nomenclatures = $this->getDoctrine()
+          ->getRepository(Nomenclature::class)
+          ->findByCreatedBy($user);
+  
+          return $this->render('card/list.html.twig', [
+              'controller_name' => 'CardController',
+              'nomenclatures' => $nomenclatures,
+          ]);
+      }
+
+    /**
+     * @Route("/nomenclature/{id}", name="nomenclature_edit")
+     * @IsGranted("ROLE_USER")
+     */
+     public function edit(Nomenclature $nomenclature, Request $request) {    
+        //$nomenclature = new Nomenclature();
+        //$card = new Card();
+        //$nomenclature->addCard($card);
+        $form = $this->createForm(NomenclatureType::Class,$nomenclature);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $nomenclature = $form->getData();
+
+            // assign the nomenclature to the current user
+            $currentUser= $this->getUser();
+            $nomenclature->setCreatedBy($currentUser);
+
+            // set card language with the same language as the nomenclature
+            $nomLang = $nomenclature->getLanguage(); 
+            foreach ($nomenclature->getCards() as $card){
+                $card->setLanguage($nomLang);
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($nomenclature);
+            $entityManager->flush();
+            return $this->render('card/upload-success.html.twig');
+        }
+
+        return $this->render('card/upload.html.twig', [
+            'formNomenclature' => $form->createView(),
+        ]);
+    }
+  
+    /**
      * @Route("/nomenclature/upload", name="nomenclature_upload")
      * @IsGranted("ROLE_USER")
      */
-    public function uploadNomenclature(Request $request) {
+     public function uploadNomenclature(Request $request) {    
         $nomenclature = new Nomenclature();
         $card = new Card();
         $nomenclature->addCard($card);
@@ -76,6 +128,7 @@ class CardController extends AbstractController
      * @Route("/card/upload", name="card_upload")
      * @IsGranted("ROLE_USER")
      */
+    /*
     public function uploadCard(Request $request) {
         $card = new Card();
         $form = $this->createForm(CardType::Class,$card);
@@ -93,6 +146,7 @@ class CardController extends AbstractController
             'formNomenclature' => $form->createView(),
         ]);
     }
+    */
 
     /**
      * @Route("/card/{id}/download", name="card_download")
