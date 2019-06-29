@@ -30,7 +30,7 @@ and change db_user db_password db_name with correct values for you.
 Then you can init the database:
 
 ```
-bin/console doctrine:schema:create
+bin/console doctrine:migrations:migrate
 ```
 
 Populate with fake data *(faker formaters [here](https://github.com/fzaninotto/Faker#formatters))*:
