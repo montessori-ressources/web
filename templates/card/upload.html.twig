@@ -12,11 +12,17 @@
             </div>
 
             {{ form_row(formNomenclature.name) }}
-            
-            {{ form_row(formNomenclature.language) }}
-            {{ form_row(formNomenclature.type) }}
-            {{ form_row(formNomenclature.mode) }}
-
+            <div class="columns">
+                <div class="column">
+                    {{ form_row(formNomenclature.language) }}
+                </div>
+                <div class="column">
+                    {{ form_row(formNomenclature.type) }}
+                </div>
+                <div class="column">
+                    {{ form_row(formNomenclature.mode) }}
+                </div>
+            </div>
 
             {% for card in formNomenclature.cards %}
 
