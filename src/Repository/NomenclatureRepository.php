@@ -49,6 +49,16 @@ class NomenclatureRepository extends ServiceEntityRepository
     */
 
 
+    public function findOneById($value): ?Nomenclature
+    {
+        return $this->createQueryBuilder('n')
+            ->andWhere('n.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     /**
      * @return Nomenclature[] Returns an array of Nomenclature objects
      */

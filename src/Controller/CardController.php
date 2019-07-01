@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Card;
+use App\Entity\DownloadOptions;
 use App\Entity\Nomenclature;
 use App\Form\CardType;
+use App\Form\DownloadOptionsType;
 use App\Form\NomenclatureType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,14 +51,14 @@ class CardController extends AbstractController
           return $this->render('card/list.html.twig', [
               'controller_name' => 'CardController',
               'nomenclatures' => $nomenclatures,
-          ]);
-      }
+        ]);
+    }
 
     /**
      * @Route("/nomenclature/{id}", name="nomenclature_edit")
      * @IsGranted("ROLE_USER")
      */
-     public function edit(Nomenclature $nomenclature, Request $request) {    
+    public function edit(Nomenclature $nomenclature, Request $request) {    
         //$nomenclature = new Nomenclature();
         //$card = new Card();
         //$nomenclature->addCard($card);
@@ -92,7 +94,7 @@ class CardController extends AbstractController
      * @Route("/nomenclature/upload", name="nomenclature_upload")
      * @IsGranted("ROLE_USER")
      */
-     public function uploadNomenclature(Request $request) {    
+    public function uploadNomenclature(Request $request) {    
         $nomenclature = new Nomenclature();
         $card = new Card();
         $nomenclature->addCard($card);
@@ -147,6 +149,67 @@ class CardController extends AbstractController
         ]);
     }
     */
+
+    /**
+     * @Route("/card/{id}/download-options", name="card_download_options")
+     * @IsGranted("ROLE_USER")
+     */
+    public function downloadOptions(Nomenclature $nomenclature, Request $request) {
+
+        $options = new DownloadOptions();
+        $options->setNomenclature($nomenclature->getId());
+        $form = $this->createForm(DownloadOptionsType::Class,$options);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $options = $form->getData();
+
+
+                $html = $this->renderView('card/print.html.twig', [
+                    'nomenclature' => $nomenclature,
+                ]);
+          
+                $pdfOptions = new Options();
+                $pdfOptions->set('isRemoteEnabled', true);
+                
+                // Instantiate Dompdf with our options
+                $dompdf = new Dompdf($pdfOptions);
+          
+                // Load HTML to Dompdf
+                $dompdf->loadHtml($html);
+
+                $format = $options->getFormat();
+           
+                // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+                switch ($format) {
+                    case "A4":
+                        $dompdf->setPaper('A4', 'portrait');
+                        break;
+                    case "US":
+                        $dompdf->setPaper('letter', 'portrait');
+                        break;
+                    default:
+                        $dompdf->setPaper('A4', 'portrait');
+                        break;
+                }
+                
+                // Render the HTML as PDF
+                $dompdf->render();
+                //
+                // Output the generated PDF to Browser (inline view)
+                $dompdf->stream("card-".$format.".pdf", [
+                    "Attachment" => false
+                ]);
+
+
+
+            //return $this->render('card/upload-success.html.twig');
+        }
+
+        return $this->render('card/download-options.html.twig', [
+            'formOptions' => $form->createView(),
+        ]);
+    }
 
     /**
      * @Route("/card/{id}/download", name="card_download")
