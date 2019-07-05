@@ -28,27 +28,27 @@
 
                 <div class="card">
                     {{ form_label(card.label) }}
-                    {{ form_widget(card.label, {'attr': {'class': 'label_field'}}) }}     
-
+                    {{ form_widget(card.label, {'attr': {'class': 'label_field'}}) }}
 
                     {{ form_label(card.image) }}
-                    {{ form_widget(card.image, {'attr': {'class': 'label_field'}}) }}    
+                    {{ form_widget(card.image) }}
+
 
                     <div class="columns">
                         <div class="column">
                             {{ form_label(card.description) }}
-                            {{ form_widget(card.description, {'attr': {'class': 'label_field'}}) }}    
+                            {{ form_widget(card.description, {'attr': {'class': 'label_field'}}) }}
                         </div>
                         <div class="column">
                             {{ form_label(card.descriptionWithGaps) }}
-                            {{ form_widget(card.descriptionWithGaps, {'attr': {'class': 'label_field'}}) }}    
+                            {{ form_widget(card.descriptionWithGaps, {'attr': {'class': 'label_field'}}) }}
                         </div>
                     </div>
                 </div>
 
             {% endfor %}
 
-            <div class="cards" data-prototype="{{ form_widget(formNomenclature.cards.vars.prototype)|e('html_attr') }}"></div>                     
+            <div class="cards" data-prototype="{{ form_widget(formNomenclature.cards.vars.prototype)|e('html_attr') }}"></div>
         {{ form_end(formNomenclature) }}
     </div>
 </section>
@@ -63,7 +63,7 @@
     jQuery(document).ready(function() {
         $collectionHolder = $('.cards');
         $collectionHolder.append($newLinkLi);
-        
+
         // count the current form inputs we have (e.g. 2), use that as the new
         // index when inserting a new item (e.g. 2)
         $collectionHolder.data('index', $collectionHolder.find(':input').length);
