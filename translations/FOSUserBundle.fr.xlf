@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="7oF7jXj" resname="layout.logout">
+        <source>layout.logout</source>
+        <target>__layout.logout</target>
+      </trans-unit>
+      <trans-unit id="sLu8MAv" resname="layout.register">
+        <source>layout.register</source>
+        <target>__layout.register</target>
+      </trans-unit>
+      <trans-unit id="J.8npBV" resname="layout.login">
+        <source>layout.login</source>
+        <target>__layout.login</target>
+      </trans-unit>
+      <trans-unit id="hmX3IJA" resname="registration.submit">
+        <source>registration.submit</source>
+        <target>__registration.submit</target>
+      </trans-unit>
+      <trans-unit id="cMU.0rQ" resname="security.login.username">
+        <source>security.login.username</source>
+        <target>__security.login.username</target>
+      </trans-unit>
+      <trans-unit id="N_kLMwm" resname="security.login.password">
+        <source>security.login.password</source>
+        <target>__security.login.password</target>
+      </trans-unit>
+      <trans-unit id="8DSptbg" resname="security.login.remember_me">
+        <source>security.login.remember_me</source>
+        <target>__security.login.remember_me</target>
+      </trans-unit>
+      <trans-unit id="tuAV77Z" resname="security.login.submit">
+        <source>security.login.submit</source>
+        <target>__security.login.submit</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
