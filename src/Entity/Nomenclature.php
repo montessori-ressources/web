@@ -45,6 +45,22 @@ class Nomenclature
      */
     private $language;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Mode", inversedBy="nomenclatures")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $mode;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\IllustrationType", inversedBy="nomenclatures")
+     */
+    private $type;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\PictureSet", inversedBy="nomenclatures")
+     */
+    private $pictureSet;
+
     public function __toString()
     {
       return $this->getName();
@@ -70,6 +86,7 @@ class Nomenclature
     public function __construct() {
         $this->createdAt = new \DateTime('now');
         $this->cards = new ArrayCollection();
+        $this->pictureSet = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -135,6 +152,56 @@ class Nomenclature
     public function setLanguage(?Language $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getMode(): ?Mode
+    {
+        return $this->mode;
+    }
+
+    public function setMode(?Mode $mode): self
+    {
+        $this->mode = $mode;
+
+        return $this;
+    }
+
+    public function getType(): ?IllustrationType
+    {
+        return $this->type;
+    }
+
+    public function setType(?IllustrationType $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PictureSet[]
+     */
+    public function getPictureSet(): Collection
+    {
+        return $this->pictureSet;
+    }
+
+    public function addPictureSet(PictureSet $pictureSet): self
+    {
+        if (!$this->pictureSet->contains($pictureSet)) {
+            $this->pictureSet[] = $pictureSet;
+        }
+
+        return $this;
+    }
+
+    public function removePictureSet(PictureSet $pictureSet): self
+    {
+        if ($this->pictureSet->contains($pictureSet)) {
+            $this->pictureSet->removeElement($pictureSet);
+        }
 
         return $this;
     }
