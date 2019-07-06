@@ -31,12 +31,12 @@
           </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link" href="{{ path('card_index') }}">
+            <a class="navbar-link" href="{{ path('nomenclature_index') }}">
               Nomenclature
             </a>
 
             <div class="navbar-dropdown">
-              <a href="{{ path('card_index') }}" class="navbar-item">
+              <a href="{{ path('nomenclature_index') }}" class="navbar-item">
                 Index
               </a>
               {% if is_granted("ROLE_USER") %}
@@ -44,7 +44,7 @@
                 My Nomenclature
               </a>
 
-              <a href="{{ path('nomenclature_upload') }}" class="navbar-item">
+              <a href="{{ path('nomenclature_new') }}" class="navbar-item">
                 Create a nomenclature
               </a>
               {% endif %}
