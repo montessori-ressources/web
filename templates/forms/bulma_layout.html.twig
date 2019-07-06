@@ -232,3 +232,14 @@
     {%- endif -%}
     class="{{ class }}"
 {%- endblock form_widget_container_attributes -%}
+
+{% block file_widget %}
+    {% spaceless %}
+
+    {{ block('form_widget') }}
+    {% if image_id is not null %}
+        <img src="{{path('image', {'id': image_id})}}" />
+    {% endif %}
+
+    {% endspaceless %}
+{% endblock %}

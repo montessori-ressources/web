@@ -24,7 +24,7 @@ use Dompdf\Options;
 class CardController extends AbstractController
 {
     /**
-     * @Route("/card/", name="card_index")
+     * @Route("/nomenclature/", name="nomenclature_index")
      */
     public function index() {
 
@@ -33,10 +33,62 @@ class CardController extends AbstractController
     }
 
     /**
-     * @Route("/nomenclature/upload", name="nomenclature_upload")
+     * @Route("/nomenclature/user", name="nomenclature_user")
      * @IsGranted("ROLE_USER")
      */
-    public function uploadNomenclature(Request $request) {
+    public function index_user() {
+        $user = $this->getUser()->getId();
+        $nomenclatures = $this->getDoctrine()
+          ->getRepository(Nomenclature::class)
+          ->findByCreatedBy($user);
+
+          return $this->render('card/list.html.twig', [
+              'controller_name' => 'CardController',
+              'nomenclatures' => $nomenclatures,
+          ]);
+      }
+
+    /**
+     * @Route("/nomenclature/edit/{id}", name="nomenclature_edit")
+     * @IsGranted("ROLE_USER")
+     */
+     public function edit(Nomenclature $nomenclature, Request $request) {
+        //$nomenclature = new Nomenclature();
+        //$card = new Card();
+        //$nomenclature->addCard($card);
+        $form = $this->createForm(NomenclatureType::Class,$nomenclature, ['new' => false]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $nomenclature = $form->getData();
+
+            // assign the nomenclature to the current user
+            $currentUser= $this->getUser();
+            $nomenclature->setCreatedBy($currentUser);
+
+            // set card language with the same language as the nomenclature
+            $nomLang = $nomenclature->getLanguage();
+            foreach ($nomenclature->getCards() as $card){
+                $card->setLanguage($nomLang);
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($nomenclature);
+            $entityManager->flush();
+            return $this->render('card/upload-success.html.twig');
+        }
+
+        return $this->render('card/edit.html.twig', [
+            'formNomenclature' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/nomenclature/new", name="nomenclature_new")
+     * @IsGranted("ROLE_USER")
+     */
+     public function new(Request $request) {
         $nomenclature = new Nomenclature();
         $card = new Card();
         $nomenclature->addCard($card);
@@ -52,7 +104,7 @@ class CardController extends AbstractController
             $nomenclature->setCreatedBy($currentUser);
 
             // set card language with the same language as the nomenclature
-            $nomLang = $nomenclature->getLanguage(); 
+            $nomLang = $nomenclature->getLanguage();
             foreach ($nomenclature->getCards() as $card){
                 $card->setLanguage($nomLang);
             }
@@ -63,7 +115,7 @@ class CardController extends AbstractController
             return $this->render('card/upload-success.html.twig');
         }
 
-        return $this->render('card/upload.html.twig', [
+        return $this->render('card/new.html.twig', [
             'formNomenclature' => $form->createView(),
         ]);
     }
@@ -72,6 +124,7 @@ class CardController extends AbstractController
      * @Route("/card/upload", name="card_upload")
      * @IsGranted("ROLE_USER")
      */
+    /*
     public function uploadCard(Request $request) {
         $card = new Card();
         $form = $this->createForm(CardType::Class,$card);
@@ -89,9 +142,10 @@ class CardController extends AbstractController
             'formNomenclature' => $form->createView(),
         ]);
     }
+    */
 
     /**
-     * @Route("/card/{id}/download", name="card_download")
+     * @Route("/nomenclature/{id}/download", name="card_download")
      * @IsGranted("ROLE_USER")
      */
     public function download(Nomenclature $nomenclature) {
@@ -148,7 +202,7 @@ class CardController extends AbstractController
     }
 
     /**
-     * @Route("/nomenclature", name="nomenclature_show", defaults={"id"=0})
+     * @Route("/nomenclature/show", name="nomenclature_show", defaults={"id"=0})
      * Search
      */
     public function show(String $id, Request $request) {

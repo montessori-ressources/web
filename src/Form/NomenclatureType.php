@@ -20,7 +20,7 @@ class NomenclatureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')            
+            ->add('name')
             ->add('language', EntityType::class, [
                 'class' => Language::class,
                 'choice_label' => 'name',
@@ -36,20 +36,30 @@ class NomenclatureType extends AbstractType
             ->add('pictureSet', EntityType::class, [
                 'class' => PictureSet::class,
                 'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true,
             ])
             ->add('cards', CollectionType::class, [
                 'entry_type' => CardType::class,
                 'allow_add' => true,
                 'by_reference' => false,
-            ])
-            ->add('save', SubmitType::class, ['label' => 'Create Nomenclature'])
-        ;
+                'entry_options' => ['new' => $options['new']],
+                ])
+            ;
+
+            if($options['new']) {
+              $builder->add('save', SubmitType::class, ['label' => 'Create Nomenclature']);
+            }
+            else {
+              $builder->add('save', SubmitType::class, ['label' => 'Update Nomenclature']);
+            }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Nomenclature::class,
+            'new' => true,
         ]);
     }
 }
