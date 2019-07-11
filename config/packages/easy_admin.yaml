@@ -35,7 +35,23 @@ easy_admin:
 
       Nomenclature:
         class: App\Entity\Nomenclature
-
+        list:
+          fields:
+            - id
+            - createdAt
+            - createdBy
+            - name
+            - statusName
+            - cards
+            - language
+        form:
+          fields:
+            - createdAt
+            - createdBy
+            - name
+            - status
+            - cards
+            - language
       User:
         class: App\Entity\User
         list:

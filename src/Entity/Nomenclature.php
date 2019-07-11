@@ -61,6 +61,17 @@ class Nomenclature
      */
     private $pictureSet;
 
+    const STATUS = [
+      0 => 'draft',
+      1 => 'waiting-approval',
+      2 => 'validated'
+
+    ];
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $status;
+
     public function __toString()
     {
       return $this->getName();
@@ -87,6 +98,7 @@ class Nomenclature
         $this->createdAt = new \DateTime('now');
         $this->cards = new ArrayCollection();
         $this->pictureSet = new ArrayCollection();
+        $this->status = 0; // draft
     }
 
     public function getName(): ?string
@@ -202,6 +214,22 @@ class Nomenclature
         if ($this->pictureSet->contains($pictureSet)) {
             $this->pictureSet->removeElement($pictureSet);
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function getStatusName() {
+      return Nomenclature::STATUS[$this->status];
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

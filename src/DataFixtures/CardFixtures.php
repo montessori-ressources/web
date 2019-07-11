@@ -28,6 +28,7 @@ class CardFixtures extends Fixture implements DependentFixtureInterface
         $nomenclature->setName($name);
         $nomenclature->setCreatedBy($this->getReference(UserFixtures::SIMPLE_USER_REFERENCE));
         $nomenclature->setMode($this->getReference(ModeFixtures::SIMPLE_REFERENCE));
+        $nomenclature->setStatus($faker->numberBetween(0,2));
 
         // add at least 4 cards
         $card_count = $faker->numberBetween(4,9);
