@@ -26,7 +26,8 @@ class CardFixtures extends Fixture implements DependentFixtureInterface
         $nomenclature = new Nomenclature();
         $name = $faker->word;
         $nomenclature->setName($name);
-        $nomenclature->setCreatedBy($this->getReference(UserFixtures::SIMPLE_USER_REFERENCE));
+        $user = $faker->randomElement([UserFixtures::SIMPLE_USER_REFERENCE, UserFixtures::SIMPLE_ADMIN_REFERENCE]);
+        $nomenclature->setCreatedBy($this->getReference($user));
         $nomenclature->setMode($this->getReference(ModeFixtures::SIMPLE_REFERENCE));
 
         // add at least 4 cards

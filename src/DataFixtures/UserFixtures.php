@@ -10,6 +10,7 @@ class UserFixtures extends Fixture
 {
     private $userManager;
     public const SIMPLE_USER_REFERENCE = 'user';
+    public const SIMPLE_ADMIN_REFERENCE = 'admin';
 
     public function __construct(UserManagerInterface $userManager)
     {
@@ -26,6 +27,8 @@ class UserFixtures extends Fixture
       $user->setEnabled(true);
       $user->setRoles(array('ROLE_ADMIN'));
       $this->userManager->updateUser($user);
+
+      $this->addReference(self::SIMPLE_ADMIN_REFERENCE, $user);
 
       // classic user
       $user = $this->userManager->createUser();

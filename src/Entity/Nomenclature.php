@@ -89,6 +89,18 @@ class Nomenclature
         $this->pictureSet = new ArrayCollection();
     }
 
+    public function __clone() {
+      $this->createdAt = new \DateTime('now');
+      $this->name = $this->name.' [1]';
+      $new_cards = new ArrayCollection();
+      foreach ($this->cards as $card) {
+        $new_card = clone $card;
+        $new_card->setNomenclature($this);
+        $new_cards->add($new_card);
+      }
+      $this->cards = $new_cards;
+    }
+
     public function getName(): ?string
     {
         return $this->name;

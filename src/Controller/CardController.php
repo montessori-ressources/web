@@ -24,7 +24,7 @@ use Dompdf\Options;
 class CardController extends AbstractController
 {
     /**
-     * @Route("/nomenclature/", name="nomenclature_index")
+     * @Route("/nomenclature", name="nomenclature_index")
      */
     public function index() {
 
@@ -46,10 +46,10 @@ class CardController extends AbstractController
               'controller_name' => 'CardController',
               'nomenclatures' => $nomenclatures,
           ]);
-      }
+    }
 
     /**
-     * @Route("/nomenclature/edit/{id}", name="nomenclature_edit")
+     * @Route("/nomenclature/{id}/edit", name="nomenclature_edit")
      * @IsGranted("ROLE_USER")
      */
      public function edit(Nomenclature $nomenclature, Request $request) {
@@ -83,6 +83,30 @@ class CardController extends AbstractController
             'formNomenclature' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/nomenclature/{id}/copy", name="nomenclature_copy")
+     * @IsGranted("ROLE_USER")
+     */
+    public function copy(Nomenclature $nomenclature) {
+      $new_entity = clone $nomenclature;
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->persist($new_entity);
+      $entityManager->flush();
+      return $this->redirectToRoute('nomenclature_user');
+    }
+
+    /**
+     * @Route("/nomenclature/{id}/delete", name="nomenclature_delete")
+     * @IsGranted("ROLE_USER")
+     */
+    public function delete(Nomenclature $nomenclature) {
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->remove($nomenclature);
+      $entityManager->flush();
+      return $this->redirectToRoute('nomenclature_user');
+    }
+
 
     /**
      * @Route("/nomenclature/new", name="nomenclature_new")
