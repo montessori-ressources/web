@@ -1,4 +1,7 @@
 language: php
+addons:
+  ssh_known_hosts:
+  - montessori-ressources.net
 install:
 - composer install
 - bin/console doctrine:migrations:migrate -n
