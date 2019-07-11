@@ -15,6 +15,7 @@ deploy:
       branch: develop
       repo: montessori-ressources/web
   - provider: script
+    skip_cleanup: true
     script: bash deploy.sh
     on:
       branch: feature/deploy-prod
