@@ -19,3 +19,6 @@
 
 # uploaded images
 /public/uploads/
+
+# ssh key
+deploy_key
