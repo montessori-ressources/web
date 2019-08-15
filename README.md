@@ -88,6 +88,10 @@ heroku git:remote -a heroku-app-name # add the heroku remote
 git push heroku my-local-branch:master # push
 ```
 
+### Deploy on prod
+
+This app is setup to automatically deploy the `master` branch on the prod system, using Travis CI. The setup is using the file `deploy.sh` that is triggering all the needed actions (`git checkout` then `composer install`).
+
 ## Licence
 
 This project is licensed under the MIT License - see the LICENSE.md file for details

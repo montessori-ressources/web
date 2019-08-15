@@ -1,4 +1,7 @@
 language: php
+addons:
+  ssh_known_hosts:
+  - montessori-ressources.net
 install:
 - composer install
 - bin/console doctrine:migrations:migrate -n
@@ -7,10 +10,19 @@ install:
 script:
 - "./bin/phpunit"
 deploy:
-  provider: heroku
-  api_key:
-    secure: RJZgo5Aoi1Amq6XnYt+UgmB+zgeVWz/XB4FQZQwOD1RV6AJJxVXpxg4Zp4bQFAbuoD2HhJpSsTkcUYuAbfmB3Esfo9coeQ7UJGhprlluvnxOJqPFy+nE0q6DhX4wVebZMctLWc4MEGaoJC0qz1FHuBW4lXd6zfRE0IeTf4+u1Ax7BSlJwoifm5JB/QWJi2+F5CaYTnPJTfjvz2CBrONZfWSRdicrCClurXEqNC/aDiBqRRbOjjsSCxV0W8SxC7Y+cmWvQveruP7RYqi7Km/IDmGkoraEr1OS1wyJ9skL/qPZeK4nPUu3l8QoLYAqK7s9auQ19ifDJOv1uB8k+fY/WzYLFkUftLA7vHFCYUW1Y4MByuoeuLNI1EQ7lwQrmFWjfyOyrwZ0mfRB+DDnQEUKPoeZWaUQ6fi9qZkHIe/U45d8FaAhRWxDzFjwx5SZvwV5Vztjm6TKw7R9RWjIIoyovPKYSz1CXreZtgKogemIMG/f4lb3pWnd0VIcCCUBWadAWLrTaZ5Sxgbm+OtNRCChL8Fl5o6vBQRjKSl51bGCUMK2ToDgMkDbjTKpc7h+y//k2sScMz3UqwIh1W4gcsd1MRUU9dWfa+rbKYTAC0ksbjXy3WqU6k8xNiQ7v4MhHRJwNuUiy24cAfkv2Qb0cBFIl9CpE0e/WFmMO6k/JW93rfw=
-  app: montessori-ressources
-  on:
-    branch: develop
-    repo: montessori-ressources/web
+  - provider: heroku
+    api_key:
+      secure: RJZgo5Aoi1Amq6XnYt+UgmB+zgeVWz/XB4FQZQwOD1RV6AJJxVXpxg4Zp4bQFAbuoD2HhJpSsTkcUYuAbfmB3Esfo9coeQ7UJGhprlluvnxOJqPFy+nE0q6DhX4wVebZMctLWc4MEGaoJC0qz1FHuBW4lXd6zfRE0IeTf4+u1Ax7BSlJwoifm5JB/QWJi2+F5CaYTnPJTfjvz2CBrONZfWSRdicrCClurXEqNC/aDiBqRRbOjjsSCxV0W8SxC7Y+cmWvQveruP7RYqi7Km/IDmGkoraEr1OS1wyJ9skL/qPZeK4nPUu3l8QoLYAqK7s9auQ19ifDJOv1uB8k+fY/WzYLFkUftLA7vHFCYUW1Y4MByuoeuLNI1EQ7lwQrmFWjfyOyrwZ0mfRB+DDnQEUKPoeZWaUQ6fi9qZkHIe/U45d8FaAhRWxDzFjwx5SZvwV5Vztjm6TKw7R9RWjIIoyovPKYSz1CXreZtgKogemIMG/f4lb3pWnd0VIcCCUBWadAWLrTaZ5Sxgbm+OtNRCChL8Fl5o6vBQRjKSl51bGCUMK2ToDgMkDbjTKpc7h+y//k2sScMz3UqwIh1W4gcsd1MRUU9dWfa+rbKYTAC0ksbjXy3WqU6k8xNiQ7v4MhHRJwNuUiy24cAfkv2Qb0cBFIl9CpE0e/WFmMO6k/JW93rfw=
+    app: montessori-ressources
+    on:
+      branch: develop
+      repo: montessori-ressources/web
+  - provider: script
+    skip_cleanup: true
+    script: bash deploy.sh
+    on:
+      branch: feature/deploy-prod
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_a324ea280f24_key -iv $encrypted_a324ea280f24_iv
+  -in deploy_key.enc -out deploy_key -d
