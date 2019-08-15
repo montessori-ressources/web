@@ -4,13 +4,30 @@
 <section class="section">
   <div class="container">
     <h1 class="title">My Nomenclatures</h1>
+    <table class="table is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for nomenclature in nomenclatures %}
+          <tr>
+            <td><a href="{{path('card_download', {'id': nomenclature.id})}}">{{nomenclature.id}}</a></td>
+            <td><a href="{{path('card_download', {'id': nomenclature.id})}}">{{nomenclature.name}}</a></td>
+            <td>
+              <a href="{{ path('nomenclature_edit', {'id': nomenclature.id}) }}"><i class="far fa-edit"></i></a>
+              <a href="{{ path('nomenclature_copy', {'id': nomenclature.id}) }}"><i class="far fa-copy"></i></a>
+              <a href="{{ path('nomenclature_delete', {'id': nomenclature.id}) }}"><i class="far fa-trash-alt"></i></a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     <ul>
-      {% for nomenclature in nomenclatures %}
-        <li>            
-          <a href="{{path('card_download', {'id': nomenclature.id})}}">{{nomenclature.name}}</a> 
-          <a href="{{ path('nomenclature_edit', {'id': nomenclature.id}) }}"><i class="far fa-edit"></i></a>
-        </li>
-      {% endfor %}
+
     </ul>
   </div>
 </section>
