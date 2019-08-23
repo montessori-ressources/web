@@ -6,7 +6,7 @@ chmod 600 ./deploy_key
 ssh-add ./deploy_key
 ssh -T -i ./deploy_key ressourcesmont@montessori-ressources.net <<EOF
   cd web
-  git checkout feature/deploy-prod
+  git checkout master
   git pull
   echo Use PHP7.3
   alias php='/opt/cpanel/ea-php73/root/usr/bin/php'

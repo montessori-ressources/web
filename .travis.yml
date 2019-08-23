@@ -21,7 +21,7 @@ deploy:
     skip_cleanup: true
     script: bash deploy.sh
     on:
-      branch: feature/deploy-prod
+      branch: master
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_a324ea280f24_key -iv $encrypted_a324ea280f24_iv
