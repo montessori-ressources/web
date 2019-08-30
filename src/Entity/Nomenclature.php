@@ -87,12 +87,12 @@ class Nomenclature
         return $this->createdAt;
     }
 
-    /*public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
-    }*/
+    }
 
     public function __construct() {
         $this->createdAt = new \DateTime('now');

@@ -43,7 +43,6 @@ class CardController extends AbstractController
           ->findByCreatedBy($user);
 
           return $this->render('card/list.html.twig', [
-              'controller_name' => 'CardController',
               'nomenclatures' => $nomenclatures,
           ]);
     }

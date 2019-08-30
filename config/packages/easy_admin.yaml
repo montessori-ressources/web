@@ -8,7 +8,12 @@ easy_admin:
         - { entity: 'Nomenclature', icon: 'square' }
         - { entity: 'Card', icon: 'square' }
         - { entity: 'Image', icon: 'image' }
+        - { label: 'Configuration' }
         - { entity: 'ImageCategory', icon: 'image' }
+        - { entity: 'Language'}
+        - { entity: 'IllustrationType' }
+        - { entity: 'Mode' }
+        - { entity: 'PictureSet' }
         - { label: 'Links' }
         - { label: 'Home', route: 'home', icon: 'home' }
     entities:
@@ -46,6 +51,12 @@ easy_admin:
             - language
         form:
           fields:
+            - name
+            - status
+            - cards
+            - language
+        show:
+          fields:
             - createdAt
             - createdBy
             - name
@@ -62,3 +73,11 @@ easy_admin:
             - googleId
             - enabled
             - lastLogin
+      Language:
+        class: App\Entity\Language
+      IllustrationType:
+        class: App\Entity\IllustrationType
+      Mode:
+        class: App\Entity\Mode
+      PictureSet:
+        class: App\Entity\PictureSet
