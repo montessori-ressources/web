@@ -92,6 +92,27 @@ git push heroku my-local-branch:master # push
 
 This app is setup to automatically deploy the `master` branch on the prod system, using Travis CI. The setup is using the file `deploy.sh` that is triggering all the needed actions (`git checkout` then `composer install`).
 
+## Git flow
+
+Run:
+```
+git flow init 
+```
+to init the git flow setup
+
+Run:
+```
+git flow feature start name-of-the-freature
+```
+to start a feature (choose the name you want, it will create a corresponding branch)
+
+Do you commit / push on the branch:
+```
+git add .
+git commit -m "first step on freature x"
+git push
+```
+
 ## Licence
 
 This project is licensed under the MIT License - see the LICENSE.md file for details

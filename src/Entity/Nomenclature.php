@@ -72,6 +72,11 @@ class Nomenclature
      */
     private $status;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tags", mappedBy="nomenclature")
+     */
+    private $tags;
+
     public function __toString()
     {
       return $this->getName();
@@ -98,7 +103,8 @@ class Nomenclature
         $this->createdAt = new \DateTime('now');
         $this->cards = new ArrayCollection();
         $this->pictureSet = new ArrayCollection();
-        $this->status = 0; // draft
+        $this->status = 0;
+        $this->tags = new ArrayCollection(); // draft
     }
 
     public function __clone() {
@@ -242,6 +248,37 @@ class Nomenclature
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tags[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tags $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->setNomenclature($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tags $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+            // set the owning side to null (unless already changed)
+            if ($tag->getNomenclature() === $this) {
+                $tag->setNomenclature(null);
+            }
+        }
 
         return $this;
     }

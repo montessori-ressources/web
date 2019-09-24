@@ -39,7 +39,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.1",
         "fzaninotto/faker": "^1.8",
         "symfony/debug-pack": "*",
-        "symfony/maker-bundle": "^1.11",
+        "symfony/maker-bundle": "^1.13",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.3.*"
