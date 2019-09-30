@@ -28,14 +28,9 @@ class ImageController extends AbstractController
       $media = $request->files->get('file');
 
       $image->setFile($media);
-      // $image->setPath($media->getPathName());
-      // $image->setName($media->getClientOriginalName());
-      // $image->upload();
       $em->persist($image);
       $em->flush();
 
-      //infos sur le document envoyé
-      //var_dump($request->files->get('file'));die;
       return new JsonResponse(array(
         'success' => true,
         'id' => $image->getId()));
@@ -51,8 +46,10 @@ class ImageController extends AbstractController
       // new nomenclature
       $nomenclature = new Nomenclature();
       $nomenclature->setCreatedBy($this->getUser());
+
+      // do default naming
       $nomenclature->setName("New nomenclature");
-      // do automatic things
+      
       $nomenclature->setLanguage(
         $this->getDoctrine()
           ->getRepository(Language::class)

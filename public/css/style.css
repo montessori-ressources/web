@@ -48,12 +48,3 @@
   font-size: 8em;
   margin: 0 auto;
 }
-
-/* DROPZONE */
-.my-dropzoneblabla {
-  height: 100px;
-  border: 1px solid black;
-  background: lightgrey;
-  text-align: center;
-  padding: 20px;
-}
