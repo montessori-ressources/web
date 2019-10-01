@@ -27,58 +27,58 @@
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item" href="{{ path('home') }}">
-            Home
+            {% trans %}Home{% endtrans %}
           </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link" href="{{ path('nomenclature_index') }}">
-              Nomenclature
+              {% trans %}Nomenclature{% endtrans %}
             </a>
 
             <div class="navbar-dropdown">
               <a href="{{ path('nomenclature_index') }}" class="navbar-item">
-                Index
+                {% trans %}Index{% endtrans %}
               </a>
               {% if is_granted("ROLE_USER") %}
               <a href="{{ path('nomenclature_user') }}" class="navbar-item">
-                My Nomenclature
+                {% trans %}My Nomenclature{% endtrans %}
               </a>
 
               <a href="{{ path('nomenclature_new') }}" class="navbar-item">
-                Create a nomenclature
+                {% trans %}Create a nomenclature{% endtrans %}
               </a>
               {% endif %}
             </div>
           </div>
 
           <a class="navbar-item">
-            Biblio
+            {% trans %}Biblio{% endtrans %}
           </a>
 
           <a class="navbar-item">
-            Math
+            {% trans %}Math{% endtrans %}
           </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
-              More
+              {% trans %}More{% endtrans %}
             </a>
 
             <div class="navbar-dropdown">
               <a class="navbar-item">
-                About
+                {% trans %}About{% endtrans %}
               </a>
               <a class="navbar-item">
-                Contact
+                {% trans %}Contact{% endtrans %}
               </a>
               <hr class="navbar-divider">
               <a class="navbar-item" href="https://github.com/montessori-ressources/web/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">
-                Report an issue
+                {% trans %}Report an issue{% endtrans %}
               </a>
               {% if is_granted("ROLE_ADMIN") %}
               <hr class="navbar-divider">
               <a class="navbar-item" href="{{ path('easyadmin') }}">
-                Admin
+                {% trans %}Admin{% endtrans %}
               </a>
               {% endif %}
             </div>
@@ -126,11 +126,15 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          <strong>Montessori Ressources</strong> by <a href="https://www.montessori.quebec/">Montessori au Québec</a>. The source code is available on
-          <a href="https://github.com/montessori-ressources/web">github</a>. The website content
-          is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+          <strong>Montessori Ressources</strong> {% trans %}by{% endtrans %} <a href="https://www.montessori.quebec/">Montessori au Québec</a>. {% trans %}The source code is available on{% endtrans %}
+          <a href="https://github.com/montessori-ressources/web">github</a>. {% trans %}The website content is licensed{% endtrans %} <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
         </p>
       </div>
+      {{app.request.locale}}
+      <ul>
+        <li><a href="{{ path('locale_switch',{'locale': 'fr' }) }}">🇫🇷</a></li>
+        <li><a href="{{ path('locale_switch',{'locale': 'en' }) }}">🇺🇸</a></li>
+      </ul>
     </footer>
 
     <!-- javascript -->
