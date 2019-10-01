@@ -19,6 +19,18 @@ class NomenclatureRepository extends ServiceEntityRepository
         parent::__construct($registry, Nomenclature::class);
     }
 
+    // Used for the card search system
+    public function search($value) {
+        return $this->createQueryBuilder('n')
+            ->andWhere('n.name LIKE :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->orderBy('n.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Nomenclature[] Returns an array of Nomenclature objects
     //  */
@@ -47,4 +59,21 @@ class NomenclatureRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    /**
+     * @return Nomenclature[] Returns an array of Nomenclature objects
+     */
+    public function findByCreatedBy($value)
+    {
+        return $this->createQueryBuilder('n')
+            ->andWhere('n.createdBy = :val')
+            ->setParameter('val', $value)
+            ->orderBy('n.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }

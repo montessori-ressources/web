@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LanguageRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ModeRepository")
  */
-class Language
+class Mode
 {
     /**
      * @ORM\Id()
@@ -19,28 +19,18 @@ class Language
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=2, nullable=true)
-     */
-    private $iso2Char;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Nomenclature", mappedBy="language")
+     * @ORM\OneToMany(targetEntity="App\Entity\Nomenclature", mappedBy="mode")
      */
     private $nomenclatures;
 
     public function __construct()
     {
         $this->nomenclatures = new ArrayCollection();
-    }
-
-    public function __toString()
-    {
-        return $this->name;
     }
 
     public function getId(): ?int
@@ -60,18 +50,6 @@ class Language
         return $this;
     }
 
-    public function getIso2Char(): ?string
-    {
-        return $this->iso2Char;
-    }
-
-    public function setIso2Char(?string $iso2Char): self
-    {
-        $this->iso2Char = $iso2Char;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Nomenclature[]
      */
@@ -84,7 +62,7 @@ class Language
     {
         if (!$this->nomenclatures->contains($nomenclature)) {
             $this->nomenclatures[] = $nomenclature;
-            $nomenclature->setLanguage($this);
+            $nomenclature->setMode($this);
         }
 
         return $this;
@@ -95,8 +73,8 @@ class Language
         if ($this->nomenclatures->contains($nomenclature)) {
             $this->nomenclatures->removeElement($nomenclature);
             // set the owning side to null (unless already changed)
-            if ($nomenclature->getLanguage() === $this) {
-                $nomenclature->setLanguage(null);
+            if ($nomenclature->getMode() === $this) {
+                $nomenclature->setMode(null);
             }
         }
 

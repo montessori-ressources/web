@@ -41,3 +41,10 @@
   width: 100%;
   height: auto;
 }
+
+/* SPINNER */
+
+.loader {
+  font-size: 8em;
+  margin: 0 auto;
+}

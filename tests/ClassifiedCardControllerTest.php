@@ -18,7 +18,7 @@ class ClassifiedCardControllerTest extends WebTestCase
     public function test_upload_anonymous_must_return_unauthorized()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/nomenclature/upload');
+        $crawler = $client->request('GET', '/nomenclature/new');
         $this->assertSame(401, $client->getResponse()->getStatusCode());
     }
 
@@ -29,7 +29,7 @@ class ClassifiedCardControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'user',
             'PHP_AUTH_PW'   => 'user',
         ]);
-        $crawler = $client->request('GET', '/nomenclature/upload');
+        $crawler = $client->request('GET', '/nomenclature/new');
         $this->assertSame(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Create a Nomenclature', $crawler->filter('h1')->text());
     }

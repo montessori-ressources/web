@@ -48,6 +48,14 @@ class Card
      */
     private $language;
 
+    public function __clone() {
+      if ($this->id) {
+        $this->id=null;
+        $new_image = clone $this->getImage();
+        $this->setImage($new_image);
+      }
+    }
+
     public function __toString()
     {
       return $this->getLabel();

@@ -45,6 +45,33 @@ class Nomenclature
      */
     private $language;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Mode", inversedBy="nomenclatures")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $mode;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\IllustrationType", inversedBy="nomenclatures")
+     */
+    private $type;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\PictureSet", inversedBy="nomenclatures")
+     */
+    private $pictureSet;
+
+    const STATUS = [
+      0 => 'draft',
+      1 => 'waiting-approval',
+      2 => 'validated'
+
+    ];
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $status;
+
     public function __toString()
     {
       return $this->getName();
@@ -60,16 +87,30 @@ class Nomenclature
         return $this->createdAt;
     }
 
-    /*public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
-    }*/
+    }
 
     public function __construct() {
         $this->createdAt = new \DateTime('now');
         $this->cards = new ArrayCollection();
+        $this->pictureSet = new ArrayCollection();
+        $this->status = 0; // draft
+    }
+
+    public function __clone() {
+      $this->createdAt = new \DateTime('now');
+      $this->name = $this->name.' [1]';
+      $new_cards = new ArrayCollection();
+      foreach ($this->cards as $card) {
+        $new_card = clone $card;
+        $new_card->setNomenclature($this);
+        $new_cards->add($new_card);
+      }
+      $this->cards = $new_cards;
     }
 
     public function getName(): ?string
@@ -135,6 +176,72 @@ class Nomenclature
     public function setLanguage(?Language $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getMode(): ?Mode
+    {
+        return $this->mode;
+    }
+
+    public function setMode(?Mode $mode): self
+    {
+        $this->mode = $mode;
+
+        return $this;
+    }
+
+    public function getType(): ?IllustrationType
+    {
+        return $this->type;
+    }
+
+    public function setType(?IllustrationType $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PictureSet[]
+     */
+    public function getPictureSet(): Collection
+    {
+        return $this->pictureSet;
+    }
+
+    public function addPictureSet(PictureSet $pictureSet): self
+    {
+        if (!$this->pictureSet->contains($pictureSet)) {
+            $this->pictureSet[] = $pictureSet;
+        }
+
+        return $this;
+    }
+
+    public function removePictureSet(PictureSet $pictureSet): self
+    {
+        if ($this->pictureSet->contains($pictureSet)) {
+            $this->pictureSet->removeElement($pictureSet);
+        }
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function getStatusName() {
+      return Nomenclature::STATUS[$this->status];
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

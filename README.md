@@ -30,7 +30,7 @@ and change db_user db_password db_name with correct values for you.
 Then you can init the database:
 
 ```
-bin/console doctrine:schema:create
+bin/console doctrine:migrations:migrate
 ```
 
 Populate with fake data *(faker formaters [here](https://github.com/fzaninotto/Faker#formatters))*:
@@ -87,6 +87,10 @@ If you want to manually deploy on Heroku a specific branch (`my-specific-branch`
 heroku git:remote -a heroku-app-name # add the heroku remote
 git push heroku my-local-branch:master # push
 ```
+
+### Deploy on prod
+
+This app is setup to automatically deploy the `master` branch on the prod system, using Travis CI. The setup is using the file `deploy.sh` that is triggering all the needed actions (`git checkout` then `composer install`).
 
 ## Licence
 

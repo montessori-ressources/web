@@ -17,7 +17,9 @@ class CardType extends AbstractType
     {
         $builder
             ->add('label')
-            ->add('image', ImageCardType::class)
+            ->add('image', ImageCardType::class,
+              ['new' => $options['new']
+            ])
             ->add('description')
             ->add('descriptionWithGaps')
 
@@ -35,6 +37,7 @@ class CardType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Card::class,
+            'new' => true,
         ]);
     }
 }
