@@ -1,0 +1,38 @@
+# single word
+by: by
+search: Search
+yes: Yes
+no: No
+
+# Navbar
+home: Home
+nomenclature: Nomenclature
+all_nomenclature: All
+my_nomenclature: My nomenclatures
+create_nomenclature: Create a nomenclature
+biblio: Biblio
+math: Math
+more: More
+about: About
+contact: Contact
+issue: Report an issue
+
+# Home page
+description: >
+  Welcome on the Montessori Ressources platform !<br />
+go: Go
+coming_soon: Coming soon...
+
+# Footer
+footer: >
+  <strong>Montessori Ressources</strong> by <a href="https://www.montessori.quebec/">
+  Montessori au Québec</a>. Source code is available on <a
+  href="https://github.com/montessori-ressources/web">Github</a>. Content of the
+  website is under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+  CC BY NC SA 4.0</a>.
+
+# Nomenclature
+text_gaps: Text with gaps
+card_downloaded: Card downloaded by
+edit_nomenclature: Edit Nomenclature
+create_nomenclature_description: Complete the form below with all nomenclature.

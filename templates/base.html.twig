@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Welcome on Montessori Ressources!{% endblock %}</title>
+    <title>{% block title %}{{ 'welcome' | trans }}{% endblock %}</title>
     <link rel="stylesheet" href="/css/bulma.min.css">
     <link rel="stylesheet" href="/css/style.css">
     {% block stylesheets %}{% endblock %}
@@ -27,58 +27,58 @@
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item" href="{{ path('home') }}">
-            {% trans %}Home{% endtrans %}
+            {{ 'home' | trans }}
           </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link" href="{{ path('nomenclature_index') }}">
-              {% trans %}Nomenclature{% endtrans %}
+              {{ 'nomenclature' | trans }}
             </a>
 
             <div class="navbar-dropdown">
               <a href="{{ path('nomenclature_index') }}" class="navbar-item">
-                {% trans %}Index{% endtrans %}
+                {{ 'all_nomenclature' | trans }}
               </a>
               {% if is_granted("ROLE_USER") %}
               <a href="{{ path('nomenclature_user') }}" class="navbar-item">
-                {% trans %}My Nomenclature{% endtrans %}
+                {{ 'my_nomenclature' | trans }}
               </a>
 
               <a href="{{ path('nomenclature_new') }}" class="navbar-item">
-                {% trans %}Create a nomenclature{% endtrans %}
+                {{ 'create_nomenclature' | trans }}
               </a>
               {% endif %}
             </div>
           </div>
 
           <a class="navbar-item">
-            {% trans %}Biblio{% endtrans %}
+            {{ 'biblio' | trans }}
           </a>
 
           <a class="navbar-item">
-            {% trans %}Math{% endtrans %}
+            {{ 'math' | trans }}
           </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
-              {% trans %}More{% endtrans %}
+              {{ 'more' | trans }}
             </a>
 
             <div class="navbar-dropdown">
               <a class="navbar-item">
-                {% trans %}About{% endtrans %}
+                {{ 'about' | trans }}
               </a>
               <a class="navbar-item">
-                {% trans %}Contact{% endtrans %}
+                {{ 'contact' | trans }}
               </a>
               <hr class="navbar-divider">
               <a class="navbar-item" href="https://github.com/montessori-ressources/web/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">
-                {% trans %}Report an issue{% endtrans %}
+                {{ 'issue' | trans }}
               </a>
               {% if is_granted("ROLE_ADMIN") %}
               <hr class="navbar-divider">
               <a class="navbar-item" href="{{ path('easyadmin') }}">
-                {% trans %}Admin{% endtrans %}
+                {{ 'admin' | trans }}
               </a>
               {% endif %}
             </div>
@@ -98,6 +98,17 @@
                   <a class="button is-light" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
               {% endif %}
             </div>
+          </div>
+          <div class="navbar-item">
+            {% if app.request.locale == 'fr' %}
+            <a class="navbar-item is-size-3" href="{{ path('locale_switch',{'locale': 'en' }) }}">
+              🇺🇸
+            </a>
+            {% else %}
+            <a class="navbar-item is-size-3" href="{{ path('locale_switch',{'locale': 'fr' }) }}">
+              🇫🇷
+            </a>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -126,15 +137,9 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          <strong>Montessori Ressources</strong> {% trans %}by{% endtrans %} <a href="https://www.montessori.quebec/">Montessori au Québec</a>. {% trans %}The source code is available on{% endtrans %}
-          <a href="https://github.com/montessori-ressources/web">github</a>. {% trans %}The website content is licensed{% endtrans %} <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+          {{ 'footer' | trans | raw }}
         </p>
       </div>
-      {{app.request.locale}}
-      <ul>
-        <li><a href="{{ path('locale_switch',{'locale': 'fr' }) }}">🇫🇷</a></li>
-        <li><a href="{{ path('locale_switch',{'locale': 'en' }) }}">🇺🇸</a></li>
-      </ul>
     </footer>
 
     <!-- javascript -->
