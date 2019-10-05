@@ -122,6 +122,9 @@
     <!-- body -->
     {% block body %}{% endblock %}
 
+    {# The ReactJS container #}
+    <div id="root"></div>
+
     <!-- footer -->
     <footer class="footer">
       <div class="content has-text-centered">
@@ -160,5 +163,7 @@
     });
     </script>
     {% block javascripts %}{% endblock %}
+    {# Load the React app from app.js file #}
+    {{ encore_entry_script_tags('app') }}
   </body>
 </html>
