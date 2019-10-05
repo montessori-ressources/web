@@ -4,6 +4,9 @@ search: Chercher
 yes: Oui
 no: Non
 
+# Title
+title: Montessori Ressources
+
 # Navbar
 home: Index
 nomenclature: Nomenclature
