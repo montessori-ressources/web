@@ -6,6 +6,7 @@ install:
 - composer install
 - bin/console doctrine:migrations:migrate -n
 - bin/console doctrine:fixtures:load -n --env=test
+- yarn encore production
 - "./bin/phpunit install"
 script:
 - "./bin/phpunit"
