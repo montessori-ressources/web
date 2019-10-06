@@ -5,15 +5,25 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import ReactDom from 'react-dom';
-// import Home from "./components/Home";
 
-function App() {
+const divStyle = {
+  margin: '40px',
+  padding: '10px',
+  border: '1px solid black'
+};
+
+let App = () => {
+  const [count, setCount] = useState(0);
+
   return (
-    <>
-        <p>Test</p>
-    </>
+    <div style={divStyle}>
+      <p>Vous avez cliqué {count} fois</p>
+      <button onClick={() => setCount(count + 1)}>
+        Cliquez ici
+      </button>
+    </div>
   )
 }
 

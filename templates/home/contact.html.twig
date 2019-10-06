@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+Below here is a React App:
+{# The ReactJS container #}
+<div id="root"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+{# Load the React app from app.js file #}
+{{ encore_entry_script_tags('app') }}
+{% endblock %}

@@ -68,7 +68,7 @@
               <a class="navbar-item">
                 About
               </a>
-              <a class="navbar-item">
+              <a href="{{ path('contact') }}" class="navbar-item">
                 Contact
               </a>
               <hr class="navbar-divider">
@@ -122,9 +122,6 @@
     <!-- body -->
     {% block body %}{% endblock %}
 
-    {# The ReactJS container #}
-    <div id="root"></div>
-
     <!-- footer -->
     <footer class="footer">
       <div class="content has-text-centered">
@@ -163,7 +160,5 @@
     });
     </script>
     {% block javascripts %}{% endblock %}
-    {# Load the React app from app.js file #}
-    {{ encore_entry_script_tags('app') }}
   </body>
 </html>
