@@ -45,7 +45,14 @@ Then you can start the local webserver and go on `http://localhost:8000` !
 bin/console server:run
 ```
 
-## Modify data model
+### Translations
+
+This project is using the translation module of Symfony
+([doc here](https://symfony.com/doc/current/translation.html)).
+The template is written in english and we want to have a french
+ translation.
+
+### Modify data model
 
 You can just modify `src/Entity/*` classes to edit the data model and links. Symfony
 provide a tool named `doctrine:schema:update` but we prefer on this project to use
@@ -65,7 +72,7 @@ Then apply the migration files on your database:
 bin/console doctrine:migrations:migrate
 ```
 
-## Test
+### Test
 
 Run:
 
@@ -94,7 +101,7 @@ This app is setup to automatically deploy the `master` branch on the prod system
 
 ## Licence
 
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Thanks
 

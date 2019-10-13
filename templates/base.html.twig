@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Welcome on Montessori Ressources!{% endblock %}</title>
+    <title>{% block title %}{{ 'title' | trans }}{% endblock %}</title>
     <link rel="stylesheet" href="/css/bulma.min.css">
     <link rel="stylesheet" href="/css/style.css">
     {% block stylesheets %}{% endblock %}
@@ -27,58 +27,58 @@
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item" href="{{ path('home') }}">
-            Home
+            {{ 'home' | trans }}
           </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link" href="{{ path('nomenclature_index') }}">
-              Nomenclature
+              {{ 'nomenclature' | trans }}
             </a>
 
             <div class="navbar-dropdown">
               <a href="{{ path('nomenclature_index') }}" class="navbar-item">
-                Index
+                {{ 'all_nomenclature' | trans }}
               </a>
               {% if is_granted("ROLE_USER") %}
               <a href="{{ path('nomenclature_user') }}" class="navbar-item">
-                My Nomenclature
+                {{ 'my_nomenclature' | trans }}
               </a>
 
               <a href="{{ path('nomenclature_new') }}" class="navbar-item">
-                Create a nomenclature
+                {{ 'create_nomenclature' | trans }}
               </a>
               {% endif %}
             </div>
           </div>
 
           <a class="navbar-item">
-            Biblio
+            {{ 'biblio' | trans }}
           </a>
 
           <a class="navbar-item">
-            Math
+            {{ 'math' | trans }}
           </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
-              More
+              {{ 'more' | trans }}
             </a>
 
             <div class="navbar-dropdown">
               <a class="navbar-item">
-                About
+                {{ 'about' | trans }}
               </a>
               <a class="navbar-item">
-                Contact
+                {{ 'contact' | trans }}
               </a>
               <hr class="navbar-divider">
               <a class="navbar-item" href="https://github.com/montessori-ressources/web/issues/new?assignees=&labels=&template=bug_report.md&title=" target="_blank">
-                Report an issue
+                {{ 'issue' | trans }}
               </a>
               {% if is_granted("ROLE_ADMIN") %}
               <hr class="navbar-divider">
               <a class="navbar-item" href="{{ path('easyadmin') }}">
-                Admin
+                {{ 'admin' | trans }}
               </a>
               {% endif %}
             </div>
@@ -98,6 +98,17 @@
                   <a class="button is-light" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
               {% endif %}
             </div>
+          </div>
+          <div class="navbar-item">
+            {% if app.request.locale == 'fr' %}
+            <a class="navbar-item is-size-3" href="{{ path('locale_switch',{'locale': 'en' }) }}">
+              🇺🇸
+            </a>
+            {% else %}
+            <a class="navbar-item is-size-3" href="{{ path('locale_switch',{'locale': 'fr' }) }}">
+              🇫🇷
+            </a>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -126,9 +137,7 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          <strong>Montessori Ressources</strong> by <a href="https://www.montessori.quebec/">Montessori au Québec</a>. The source code is available on
-          <a href="https://github.com/montessori-ressources/web">github</a>. The website content
-          is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+          {{ 'footer' | trans | raw }}
         </p>
       </div>
     </footer>

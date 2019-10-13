@@ -1,0 +1,46 @@
+# single word
+by: par
+search: Chercher
+yes: Oui
+no: Non
+
+# Title
+title: Montessori Ressources
+
+# Navbar
+home: Index
+nomenclature: Nomenclature
+all_nomenclature: Toutes
+my_nomenclature: Mes nomenclatures
+create_nomenclature: Créer une nomenclature
+biblio: Biblio
+math: Math
+more: Plus
+about: A Propos
+contact: Contact
+issue: Rapportez un problème
+
+# Home page
+description: >
+  Bienvenue sur la plateforme Ressource Montessori !<br />
+  Nous vous proposons un site web de partage dynamique, un endroit où
+  vous avez la possibilité de télécharger du matériel Montessori qui
+  correspond aux standards idéaux pensés par Maria Montessori, mais
+  aussi de partager vos créations.<br />
+  Tous ensemble, cultivons le plaisir d’apprendre !
+go: Allez
+coming_soon: Bientôt...
+
+# Footer
+footer: >
+  <strong>Montessori Ressources</strong> par <a href="https://www.montessori.quebec/">Montessori
+  au Québec</a>. Le code source est disponible sur <a
+  href="https://github.com/montessori-ressources/web">github</a>. Le contenu du
+  site est sous license <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+  CC BY NC SA 4.0</a>.
+
+# Nomenclature
+text_gaps: Texte avec trous
+card_downloaded: Illustrations téléchargées par
+edit_nomenclature: Editer Nomenclature
+create_nomenclature_description: Completez le formulaire ci dessous pour créer une nomenclature
