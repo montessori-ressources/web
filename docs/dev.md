@@ -44,7 +44,7 @@ bin/console server:run
 
 ## Frontend
 
-You need to have `yarn` on your computer. 
+You need to have `yarn` on your computer.
 
 Install dependencies:
 
@@ -57,6 +57,13 @@ Run the dev environment that recompile when js files change:
 ```
 yarn encore dev --watch
 ```
+
+### Translations
+
+This project is using the translation module of Symfony
+([doc here](https://symfony.com/doc/current/translation.html)).
+The template is written in english and we want to have a french
+ translation.
 
 ## Modify data model
 

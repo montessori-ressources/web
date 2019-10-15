@@ -15,7 +15,7 @@ If you want to help **PR** and [issues](https://github.com/montessori-ressources
 
 ## Licence
 
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Thanks
 
