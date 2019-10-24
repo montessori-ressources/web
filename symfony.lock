@@ -8,6 +8,9 @@
     "clue/stream-filter": {
         "version": "v1.4.1"
     },
+    "core23/dompdf-bundle": {
+        "version": "2.5.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
