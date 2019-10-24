@@ -180,7 +180,8 @@ class CardController extends AbstractController
       $response = $dompdf->getStreamResponse($html, "card.pdf", [
         "Attachment" => false
       ]);
-      $response->send();
+      return $response;
+      //$response->send();
     }
 
     /**
