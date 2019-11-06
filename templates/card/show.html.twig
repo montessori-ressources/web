@@ -42,14 +42,33 @@
               <div class="control">
                 <div class="tags has-addons">
                   <span class="tag is-dark">Description</span>
-                  <span class="tag is-success">Yes</span>
+
+                  {% if (nomenclature.hasDescription == 'Yes') %}
+                    <span class="tag is-success">
+                  {% elseif (nomenclature.hasDescription == 'No') %}
+                    <span class="tag is-danger">
+                  {% elseif (nomenclature.hasDescription == 'Partial') %}
+                    <span class="tag is-warning">
+                  {% else %}
+                    <span class="tag is-info">
+                  {% endif %}
+                  {{nomenclature.hasDescription}}</span>
                 </div>
               </div>
 
               <div class="control">
                 <div class="tags has-addons">
                   <span class="tag is-dark">Text with gaps</span>
-                  <span class="tag is-danger">No</span>
+                  {% if (nomenclature.hasDescriptionWithGaps == 'Yes') %}
+                    <span class="tag is-success">
+                  {% elseif (nomenclature.hasDescriptionWithGaps == 'No') %}
+                    <span class="tag is-danger">
+                  {% elseif (nomenclature.hasDescriptionWithGaps == 'Partial') %}
+                    <span class="tag is-warning">
+                  {% else %}
+                    <span class="tag is-info">
+                  {% endif %}
+                  {{nomenclature.hasDescriptionWithGaps}}</span>
                 </div>
               </div>
             </div>

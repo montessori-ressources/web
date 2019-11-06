@@ -66,11 +66,37 @@ class CardController extends AbstractController
             $currentUser= $this->getUser();
             $nomenclature->setCreatedBy($currentUser);
 
+            $hasDescription = 'No';
+            $hasDescriptionWithGaps = 'No';
+            
             // set card language with the same language as the nomenclature
             $nomLang = $nomenclature->getLanguage();
             foreach ($nomenclature->getCards() as $card){
                 $card->setLanguage($nomLang);
+
+                // test the descripition tag
+                if($card->getDescription() != '') {
+                  if($hasDescription == 'No')
+                    $hasDescription = 'Yes';
+                } else {
+                  if($hasDescription == 'Yes')
+                    $hasDescription = 'Partial';
+                }
+
+                // test the descripition with gaps tag
+                if($card->getDescriptionWithGaps() != '') {
+                  if($hasDescriptionWithGaps == 'No')
+                    $hasDescriptionWithGaps = 'Yes';
+                  } else {
+                    if($hasDescriptionWithGaps == 'Yes')
+                  $hasDescriptionWithGaps = 'Partial';
+                }
+                
             }
+
+            // set nomenclature tags
+            $nomenclature->setHasDescription($hasDescription);
+            $nomenclature->setHasDescriptionWithGaps($hasDescriptionWithGaps);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($nomenclature);
