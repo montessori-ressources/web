@@ -4,21 +4,58 @@
         <meta charset="UTF-8">
         <style  type="text/css">
           @import url('https://fonts.googleapis.com/css?family=Patrick+Hand');
-          @page { margin: 2cm;}
+          @page { margin: 0.5cm;}
+          * {
+            box-sizing: border-box;
+          }
           html {
             font-family: 'Patrick Hand', cursive;
-            font-size: 34px;;
+            font-size: 30px;
           }
-          table {
-            width: 100%;
+
+          body {
+            margin:0cm;
+            padding:0cm;
           }
-          td {
-            text-align: center;
+
+          .box {
+            float:left;
+            border:1px solid #000;
+            padding:0;
+            margin: 0;
+            overflow:hidden;
           }
-          img {
-            width: 14cm;
+
+          .box.even {
+            margin-leftt:0.5cm;
           }
+
+          .box.odd {
+            margin-right:0.5cm;
+          }
+
+          .clear-fix {
+            clear:both;
+          }
+
+          .box img {
+            border-bottom:1px solid #000;
+            display:block;
+            height:14cm;
+            width:14cm;
+          }
+
+          .box .label {
+            display:block;
+            padding:1cm;
+            color:#000;
+            text-transform:capitalize;
+          }
+
+
+
           footer {
+            display:none;
             position: fixed;
             bottom: -60px;
             left: 0px;
@@ -34,29 +71,35 @@
     </head>
     <body>
       <footer>
-        {{'card_downloaded' | trans}} ____
+        {{'card_downloaded' | trans}} {{nomenclature.createdBy}}
       </footer>
       <main>
+        {% set cnt = 0 %}
         {% for card in nomenclature.cards %}
-        <table>
-          <tr>
-            <td>
-              {% if env == 'int' %}
-              <img src="{{url('image', {'id': card.image.id})}}" alt="Image">
+
+              {% if (cnt %2) == 1 %}
+                <div class="box even">
               {% else %}
-              <img src="uploads/images/{{card.image.name}}" alt="Image">
+                <div class="box odd">
               {% endif %}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              {{card.label}}
-            </td>
-          </tr>
-        </table>
-        {% if not loop.last %}
-          <div style="page-break-after: always;"></div>
-        {% endif %}
+
+                {% if env == 'int' %}
+                  <img src="{{url('image', {'id': card.image.id})}}" alt="Image">
+                {% else %}
+                  <img src="uploads/images/{{card.image.name}}" alt="Image">
+                {% endif %}
+                  <div class="label">
+                    {{card.label}}
+                  </div>
+              </div>
+              {% if (cnt %2) == 1 %}
+                <div class="clear-fix"></div>
+              {% endif %}
+             {% set cnt = cnt + 1 %}
+ 
+              {# % if (not loop.last) and (cnt %2) == 0 %}
+                <div style="page-break-after: always;"></div>
+              {% endif % #}
         {% endfor %}
 
       </main>
