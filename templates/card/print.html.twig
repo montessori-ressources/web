@@ -52,27 +52,22 @@
             text-transform:capitalize;
           }
 
-
-
           footer {
-            display:none;
+            clear:both;
             position: fixed;
-            bottom: -60px;
+            bottom: 0px;
             left: 0px;
             right: 0px;
             height: 50px;
+            font-size:14pt;
 
             /** Extra personal styles **/
-            border: 1px solid #03a9f4;
-            text-align: center;
+            text-align: right;
             line-height: 30px;
           }
         </style>
     </head>
     <body>
-      <footer>
-        {{'card_downloaded' | trans}} {{nomenclature.createdBy}}
-      </footer>
       <main>
         {% set cnt = 0 %}
         {% for card in nomenclature.cards %}
@@ -103,5 +98,9 @@
         {% endfor %}
 
       </main>
+      <footer>
+        {{'card_downloaded' | trans}} {{nomenclature.createdBy}}
+      </footer>
+
     </body>
 </html>
