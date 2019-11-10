@@ -111,9 +111,4 @@ final class Version20191029165222 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_125B3C7390BFD4B8 ON nomenclature_picture_set (nomenclature_id)');
         $this->addSql('CREATE INDEX IDX_125B3C73811FBB08 ON nomenclature_picture_set (picture_set_id)');
     }
-
-    public function postUp(Schema $schema) {
-        $this->connection->executeQuery("UPDATE nomenclature SET has_description = 'bouya");
-
-    }
 }
