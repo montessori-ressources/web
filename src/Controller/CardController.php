@@ -66,9 +66,9 @@ class CardController extends AbstractController
             $currentUser= $this->getUser();
             $nomenclature->setCreatedBy($currentUser);
 
-            $hasDescription = 'No';
-            $hasDescriptionWithGaps = 'No';
-            
+            $descriptionNotEmptyCount = 0;
+            $descriptionWithGapsNotEmptyCount = 0;
+
             // set card language with the same language as the nomenclature
             $nomLang = $nomenclature->getLanguage();
             foreach ($nomenclature->getCards() as $card){
@@ -76,27 +76,35 @@ class CardController extends AbstractController
 
                 // test the descripition tag
                 if($card->getDescription() != '') {
-                  if($hasDescription == 'No')
-                    $hasDescription = 'Yes';
-                } else {
-                  if($hasDescription == 'Yes')
-                    $hasDescription = 'Partial';
+                  $descriptionNotEmptyCount++;
                 }
 
                 // test the descripition with gaps tag
                 if($card->getDescriptionWithGaps() != '') {
-                  if($hasDescriptionWithGaps == 'No')
-                    $hasDescriptionWithGaps = 'Yes';
-                  } else {
-                    if($hasDescriptionWithGaps == 'Yes')
-                  $hasDescriptionWithGaps = 'Partial';
+                  $descriptionWithGapsNotEmptyCount++;
                 }
-                
             }
 
             // set nomenclature tags
-            $nomenclature->setHasDescription($hasDescription);
-            $nomenclature->setHasDescriptionWithGaps($hasDescriptionWithGaps);
+            if($descriptionNotEmptyCount == sizeof($nomenclature->getCards())) {
+              $nomenclature->setHasDescription("Yes");
+            }
+            else if ($descriptionNotEmptyCount == 0){
+              $nomenclature->setHasDescription("No");
+            }
+            else {
+              $nomenclature->setHasDescription("Partial");
+            }
+
+            if($descriptionWithGapsNotEmptyCount == sizeof($nomenclature->getCards())) {
+              $nomenclature->setHasDescriptionWithGaps("Yes");
+            }
+            else if ($descriptionWithGapsNotEmptyCount == 0){
+              $nomenclature->setHasDescriptionWithGaps("No");
+            }
+            else {
+              $nomenclature->setHasDescriptionWithGaps("Partial");
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($nomenclature);
