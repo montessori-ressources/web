@@ -2,4 +2,4 @@ core23_dompdf:
     defaults:
         isRemoteEnabled: true
         defaultPaperSize: A4
-        
+        defaultPaperOrientation: landscape

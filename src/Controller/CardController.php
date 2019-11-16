@@ -18,9 +18,6 @@ use League\Flysystem\Filesystem;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use Core23\DompdfBundle\Wrapper\DompdfWrapper;
-// Include Dompdf required namespaces
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 class CardController extends AbstractController
 {
@@ -173,30 +170,14 @@ class CardController extends AbstractController
      * @IsGranted("ROLE_USER")
      */
     public function download(Nomenclature $nomenclature, DompdfWrapper $dompdf) {
-      
+      // The DOMpdf wrapper is injected directly into the controller method
       $html = $this->renderView('card/print.html.twig', [
           'nomenclature' => $nomenclature,
       ]);
-/*
       $response = $dompdf->getStreamResponse($html, "card.pdf", [
         "Attachment" => false
-        $dompdf->setPaper('A4', 'landscape');
       ]);
       return $response;
-*/
-
-      $name = "card.pdf";
-      $dompdf = new Dompdf();
-      $dompdf->loadHtml($html);
-
-      // (Optional) Setup the paper size and orientation
-      $dompdf->setPaper('A4', 'landscape');
-
-      // Render the HTML as PDF
-      $dompdf->render();
-      $response = $dompdf->stream($name, array('Attachment' => false));
-      return $response;
-
     }
 
     /**
