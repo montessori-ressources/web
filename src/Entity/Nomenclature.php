@@ -72,6 +72,16 @@ class Nomenclature
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $hasDescription;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $hasDescriptionWithGaps;
+
     public function __toString()
     {
       return $this->getName();
@@ -242,6 +252,30 @@ class Nomenclature
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getHasDescription(): ?string
+    {
+        return $this->hasDescription;
+    }
+
+    public function setHasDescription(string $hasDescription): self
+    {
+        $this->hasDescription = $hasDescription;
+
+        return $this;
+    }
+
+    public function getHasDescriptionWithGaps(): ?string
+    {
+        return $this->hasDescriptionWithGaps;
+    }
+
+    public function setHasDescriptionWithGaps(string $hasDescriptionWithGaps): self
+    {
+        $this->hasDescriptionWithGaps = $hasDescriptionWithGaps;
 
         return $this;
     }
