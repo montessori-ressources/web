@@ -22,12 +22,11 @@ issue: Rapportez un problème
 
 # Home page
 description: >
-  Bienvenue sur la plateforme Ressource Montessori !<br />
-  Nous vous proposons un site web de partage dynamique, un endroit où
-  vous avez la possibilité de télécharger du matériel Montessori qui
-  correspond aux standards idéaux pensés par Maria Montessori, mais
-  aussi de partager vos créations.<br />
-  Tous ensemble, cultivons le plaisir d’apprendre !
+  <p>Bienvenu sur la plateforme de ressources Montessori.</p>
+  <p>Maria Montessori, nous a légué une philosophie de pensée, une ouverture permettant de considérer l’enfant comme étant l’adulte de demain, un apprenant qui se nourrit de son environnement. </p>
+  <p>Avec une vision d’ouverture ainsi que la collaboration de chacun, nous avons créé cette plateforme qui réunit tous les paramètres optimaux qui répondent aux standards réfléchis par Maria Montessori. </p>
+  <p>Nous vous proposons une référence web qui prône un partage dynamique, où chacun est libre d’ajouter ou de bonifier les matériels proposés.</p>
+  <p>Nous vous souhaitons du plaisir, ainsi que de rependent la passion et l’émerveillement auprès des enfants.</p>
 go: Allez
 coming_soon: Bientôt...
 
