@@ -45,6 +45,45 @@ class CardController extends AbstractController
           ]);
     }
 
+    private function setDescriptions($nomenclature) {
+      
+      $descriptionNotEmptyCount = 0;
+      $descriptionWithGapsNotEmptyCount = 0;
+
+      $nomLang = $nomenclature->getLanguage();
+      foreach ($nomenclature->getCards() as $card){
+        $card->setLanguage($nomLang);
+
+        // test the descripition tag
+        if($card->getDescription() != '') {
+          $descriptionNotEmptyCount++;
+        }
+
+        // test the descripition with gaps tag
+        if($card->getDescriptionWithGaps() != '') {
+          $descriptionWithGapsNotEmptyCount++;
+        }
+      }
+       
+      // set nomenclature tags
+      if($descriptionNotEmptyCount == sizeof($nomenclature->getCards())) {
+        $nomenclature->setHasDescription("Yes");
+      }
+      else if ($descriptionNotEmptyCount == 0){
+        $nomenclature->setHasDescription("No");
+      } else {
+        $nomenclature->setHasDescription("Partial");
+      }
+
+      if($descriptionWithGapsNotEmptyCount == sizeof($nomenclature->getCards())) {
+        $nomenclature->setHasDescriptionWithGaps("Yes");
+      } else if ($descriptionWithGapsNotEmptyCount == 0){
+        $nomenclature->setHasDescriptionWithGaps("No");
+      } else {
+        $nomenclature->setHasDescriptionWithGaps("Partial");
+      }
+    }
+
     /**
      * @Route("/nomenclature/{id}/edit", name="nomenclature_edit")
      * @IsGranted("ROLE_USER")
@@ -64,45 +103,8 @@ class CardController extends AbstractController
             $currentUser= $this->getUser();
             $nomenclature->setCreatedBy($currentUser);
 
-            $descriptionNotEmptyCount = 0;
-            $descriptionWithGapsNotEmptyCount = 0;
-
-            // set card language with the same language as the nomenclature
-            $nomLang = $nomenclature->getLanguage();
-            foreach ($nomenclature->getCards() as $card){
-                $card->setLanguage($nomLang);
-
-                // test the descripition tag
-                if($card->getDescription() != '') {
-                  $descriptionNotEmptyCount++;
-                }
-
-                // test the descripition with gaps tag
-                if($card->getDescriptionWithGaps() != '') {
-                  $descriptionWithGapsNotEmptyCount++;
-                }
-            }
-
-            // set nomenclature tags
-            if($descriptionNotEmptyCount == sizeof($nomenclature->getCards())) {
-              $nomenclature->setHasDescription("Yes");
-            }
-            else if ($descriptionNotEmptyCount == 0){
-              $nomenclature->setHasDescription("No");
-            }
-            else {
-              $nomenclature->setHasDescription("Partial");
-            }
-
-            if($descriptionWithGapsNotEmptyCount == sizeof($nomenclature->getCards())) {
-              $nomenclature->setHasDescriptionWithGaps("Yes");
-            }
-            else if ($descriptionWithGapsNotEmptyCount == 0){
-              $nomenclature->setHasDescriptionWithGaps("No");
-            }
-            else {
-              $nomenclature->setHasDescriptionWithGaps("Partial");
-            }
+            // set card language with the same language as the nomenclature and descriptions
+            $this->setDescriptions($nomenclature);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($nomenclature);
@@ -159,10 +161,13 @@ class CardController extends AbstractController
             $nomenclature->setCreatedBy($currentUser);
 
             // set card language with the same language as the nomenclature
-            $nomLang = $nomenclature->getLanguage();
+            /* $nomLang = $nomenclature->getLanguage();
             foreach ($nomenclature->getCards() as $card){
                 $card->setLanguage($nomLang);
-            }
+            } */
+            // set card language with the same language as the nomenclature and descriptions
+            $this->setDescriptions($nomenclature);
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($nomenclature);

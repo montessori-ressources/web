@@ -86,6 +86,9 @@ class ImageController extends AbstractController
         $nomenclature->addCard($card);
       }
 
+      $nomenclature->setHasDescription("No");
+      $nomenclature->setHasDescriptionWithGaps("No");
+
       $em->persist($nomenclature);
       $em->flush();
 
