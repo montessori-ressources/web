@@ -64,8 +64,8 @@ class Nomenclature
     const STATUS = [
       0 => 'draft',
       1 => 'waiting-approval',
-      2 => 'validated'
-
+      2 => 'approved',
+      3 => 'certified'
     ];
     /**
      * @ORM\Column(type="integer")
