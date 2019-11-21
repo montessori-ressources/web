@@ -31,7 +31,7 @@ class ClassifiedCardControllerTest extends WebTestCase
         ]);
         $crawler = $client->request('GET', '/nomenclature/new');
         $this->assertSame(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Create a nomenclature', $crawler->filter('h1')->text());
+        $this->assertContains('Créer une nomenclature', $crawler->filter('h1')->text());
     }
 
     public function test_admin_anonymous_must_return_unauthorized()
