@@ -39,3 +39,12 @@ text_gaps: Text with gaps
 card_downloaded: Card created by
 edit_nomenclature: Edit Nomenclature
 create_nomenclature_description: Complete the form below with all nomenclature.
+nomenclature-dropzone-intro: To create a new nomenclature, simply drag and drop the nomenclature imags in the drop zone below.
+nomenclature-minimum-cards: <strong class="has-text-weight-bold">Don't forget:</strong> A nomenclature should contain <strong class="has-text-danger has-text-weight-bold">at least 4 images</strong>.
+nomenclature-edit-intro: A nomenclature .... TBC
+
+# Help text in forms
+help-nomenclature-name: The name is used by the search engine only. This name is never displayed in the printed document.
+help-type: All the nomenclature images should have the same type.
+help-nomenclature-description: TBC...
+help-nomenclature-description-gaps: TBC...
