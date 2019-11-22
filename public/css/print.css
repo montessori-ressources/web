@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Patrick+Hand');
+* {
+    box-sizing: border-box;
+}
+  
+@page { margin: 0.5cm;}
+
+.box {
+    border:1px solid #000;
+    float:left;
+    height: 16.5cm;
+    width:14cm;
+}
+
+.box img {
+    display:block;
+    height:14cm;
+    width:14cm;  
+}
+
+.box .label {
+    border-top:1px solid #000;
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 24pt;
+    height: 2.5cm;
+    position: relative;
+    width: 14cm;
+}
+
+.box .label .content {
+    position: absolute;
+    text-align: center;
+    top:25px;
+    width:100%;
+}
+
+.box.even {
+    margin-left:0.25cm;
+}
+  
+.box.odd {
+    margin-right:0.25cm;
+}
+
+.clear-fix {
+    clear:both;
+}
+
+footer {
+    clear:both;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 50px;
+    font-size:14pt;
+    text-align: right;
+    line-height: 30px;
+}
