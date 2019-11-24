@@ -1,71 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <style  type="text/css">
-          @import url('https://fonts.googleapis.com/css?family=Patrick+Hand');
-          @page { margin: 0.5cm;}
-          * {
-            box-sizing: border-box;
-          }
-          html {
-            font-family: 'Patrick Hand', cursive;
-            font-size: 30px;
-          }
-
-          body {
-            margin:0cm;
-            padding:0cm;
-          }
-
-          .box {
-            float:left;
-            border:1px solid #000;
-            padding:0;
-            margin: 0;
-            overflow:hidden;
-          }
-
-          .box.even {
-            margin-leftt:0.5cm;
-          }
-
-          .box.odd {
-            margin-right:0.5cm;
-          }
-
-          .clear-fix {
-            clear:both;
-          }
-
-          .box img {
-            border-bottom:1px solid #000;
-            display:block;
-            height:14cm;
-            width:14cm;
-          }
-
-          .box .label {
-            display:block;
-            padding:1cm;
-            color:#000;
-            text-transform:capitalize;
-          }
-
-          footer {
-            clear:both;
-            position: fixed;
-            bottom: 0px;
-            left: 0px;
-            right: 0px;
-            height: 50px;
-            font-size:14pt;
-
-            /** Extra personal styles **/
-            text-align: right;
-            line-height: 30px;
-          }
-        </style>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="css/print.css" /> 
     </head>
     <body>
       <main>
@@ -84,7 +21,7 @@
                   <img src="uploads/images/{{card.image.name}}" alt="Image">
                 {% endif %}
                   <div class="label">
-                    {{card.label}}
+                    <div class="content">{{card.label}}</div>
                   </div>
               </div>
               {% if (cnt %2) == 1 %}
@@ -92,8 +29,8 @@
               {% endif %}
              {% set cnt = cnt + 1 %}
  
-              {# % if (not loop.last) and (cnt %2) == 0 %}
-                <div style="page-break-after: always;"></div>
+              {# % if (not loop.last) or (cnt %2) == 0 %}
+                <div style="page-break-after: left;"></div>
               {% endif % #}
         {% endfor %}
 
