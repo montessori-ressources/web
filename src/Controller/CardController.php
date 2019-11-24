@@ -89,18 +89,22 @@ class CardController extends AbstractController
      * @IsGranted("ROLE_USER")
      */
      public function edit(Nomenclature $nomenclature, Request $request) {
-        //$nomenclature = new Nomenclature();
-        //$card = new Card();
-        //$nomenclature->addCard($card);
-        $form = $this->createForm(NomenclatureType::Class,$nomenclature, ['new' => false]);
+
+      $currentUser= $this->getUser();
+      $createBy = $nomenclature->getCreatedBy();
+
+      if($currentUser != $createBy) {
+        return new Response('Access Denied...', 403);
+      }
+
+      $form = $this->createForm(NomenclatureType::Class,$nomenclature, ['new' => false]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $nomenclature = $form->getData();
 
-            // assign the nomenclature to the current user
-            $currentUser= $this->getUser();
+            // assign the nomenclature to the current user (BUG ? should we really after edit ???)
             $nomenclature->setCreatedBy($currentUser);
 
             // set card language with the same language as the nomenclature and descriptions
