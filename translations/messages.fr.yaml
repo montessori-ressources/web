@@ -43,3 +43,12 @@ text_gaps: Texte avec trous
 card_downloaded: Illustrations proposée par
 edit_nomenclature: Editer Nomenclature
 create_nomenclature_description: Completez le formulaire ci dessous pour créer une nomenclature
+nomenclature-dropzone-intro: Pour créer une nomenclature déposé simplement vos image dans la zone ci-dessous
+nomenclature-minimum-cards: <strong class="has-text-weight-bold">Attention:</strong> Une nomenclature doit contenir <strong class="has-text-danger has-text-weight-bold">au moin 4 images</strong>.
+nomenclature-edit-intro: A nomenclature .... TBC
+
+# Help text in forms
+help-nomenclature-name: Ce name est utilisé par le moteur de recherche pour retrouver ue nomenclature. il n'est pas imprimé dans le PDF.
+help-type: Toutes les images d'une nomenclature doivent être du même type
+help-nomenclature-description: TBC...
+help-nomenclature-description-gaps: TBC...

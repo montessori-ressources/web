@@ -1,21 +1,34 @@
+
+<p>{{'nomenclature-edit-intro' | trans}}</p>
+<p>{{ 'nomenclature-minimum-cards' | trans | raw }}</p>
+<br/>
 {{ form_start(formNomenclature) }}
 
     <div class="help is-danger">
         {{ form_errors(formNomenclature) }}
     </div>
 
+    <span data-tooltip="{{'help-nomenclature-name' | trans}}" class="icon has-text-info is-pulled-left has-tooltip-multiline">
+        <i  class="fas fa-question-circle"></i>
+    </span>
     {{ form_row(formNomenclature.name) }}
     <div class="columns">
         <div class="column">
             {{ form_row(formNomenclature.language) }}
         </div>
         <div class="column">
+            <span data-tooltip="{{'help-type' | trans}}" class="icon has-text-info is-pulled-left has-tooltip-multiline">
+                <i  class="fas fa-question-circle"></i>
+            </span>
             {{ form_row(formNomenclature.type) }}
         </div>
         <div class="column">
+            <span data-tooltip="Tooltip Text" class="icon has-text-info is-pulled-left has-tooltip-multiline">
+                <i  class="fas fa-question-circle"></i>
+            </span>
             {{ form_row(formNomenclature.mode) }}
         </div>
-        <div class="column">
+        <div class="column is-hidden">
             {{ form_row(formNomenclature.pictureSet) }}
         </div>
     </div>
@@ -26,16 +39,22 @@
             {{ form_label(card.label) }}
             {{ form_widget(card.label, {'attr': {'class': 'label_field'}}) }}
 
-            {{ form_label(card.image) }}
-            {{ form_widget(card.image) }}
-
-
             <div class="columns">
                 <div class="column">
-                    {{ form_label(card.description) }}
-                    {{ form_widget(card.description, {'attr': {'class': 'label_field'}}) }}
+                    <span class="is-hidden">{{ form_label(card.image) }}</span>
+                    {{ form_widget(card.image) }}
                 </div>
                 <div class="column">
+
+                    <span data-tooltip="{{'help-nomenclature-description' | trans}}" class="icon has-text-info is-pulled-left has-tooltip-multiline">
+                        <i  class="fas fa-question-circle"></i>
+                    </span>    
+                    {{ form_label(card.description) }}
+                    {{ form_widget(card.description, {'attr': {'class': 'label_field'}}) }}
+                    
+                    <span data-tooltip="{{'help-nomenclature-description-gaps' | trans}}" class="icon has-text-info is-pulled-left has-tooltip-multiline">
+                        <i  class="fas fa-question-circle"></i>
+                    </span>
                     {{ form_label(card.descriptionWithGaps) }}
                     {{ form_widget(card.descriptionWithGaps, {'attr': {'class': 'label_field'}}) }}
                 </div>

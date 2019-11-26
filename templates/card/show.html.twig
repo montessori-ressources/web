@@ -1,9 +1,11 @@
 <div class="column is-half-widescreen">
   <div class="box">
 
+    {% if nomenclature.status == 3 %}
     <span class="icon is-large is-pulled-right nomenclature-label">
       <i class="fas fa-check-circle fa-3x"></i>
     </span>
+    {% endif %}
 
     <article class="media">
       <div class="media-left">
@@ -28,11 +30,11 @@
       <div class="media-content">
         <h2 class="title is-2">{{nomenclature.name}}</h2>
         <small>{{'by' | trans}} {{ nomenclature.createdBy.username }}</small>
-        <div class="tags">
+        {# <div class="tags">
           <span class="tag">Gospel</span>
           <span class="tag">Chant</span>
           <span class="tag">Religieux</span>
-        </div>
+        </div> #}
 
         <div class="columns">
           <div class="column">
@@ -73,6 +75,7 @@
               </div>
             </div>
           </div>
+          {#
           <div class="column">
             <nav class="level is-mobile">
               <div class="level-left">
@@ -104,7 +107,7 @@
               <p class="title is-5">123</p>
             </div>
           </div>
-        </nav>
+        </nav>#}
       </div>
     </article>
   </div>

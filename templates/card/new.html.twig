@@ -54,6 +54,9 @@ $(function() {
 <section class="section">
     <div class="container">
         <h1 class="title">{{'create_nomenclature' | trans}}</h1>
+        <p>{{ 'nomenclature-dropzone-intro' | trans }}</p>
+        <p>{{ 'nomenclature-minimum-cards' | trans | raw }}</p>
+        <br/>
         <div class="dropzone my-dropzone" id="form_snippet_image" action="{{path('ajax_image_send')}}">
         </div>
     </div>

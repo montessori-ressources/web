@@ -176,7 +176,10 @@ class CardController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($nomenclature);
             $entityManager->flush();
-            return $this->render('card/upload-success.html.twig');
+            //return $this->render('card/upload-success.html.twig');
+            return $this->render('card/edit.html.twig', [
+              'formNomenclature' => $form->createView(),
+            ]);
         }
 
         return $this->render('card/new.html.twig', [
