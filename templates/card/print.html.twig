@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <link rel="stylesheet" href="css/print.css" /> 
+        <link rel="stylesheet" href="css/print.css" />
     </head>
     <body>
       <main>
@@ -28,7 +28,7 @@
                 <div class="clear-fix"></div>
               {% endif %}
              {% set cnt = cnt + 1 %}
- 
+
               {# % if (not loop.last) or (cnt %2) == 0 %}
                 <div style="page-break-after: left;"></div>
               {% endif % #}
@@ -36,7 +36,7 @@
 
       </main>
       <footer>
-        {{'card_downloaded' | trans}} {{nomenclature.createdBy}}
+        {{'card_downloaded' | trans}} {{nomenclature.createdBy}} --- <strong><em>{{'card_license' | trans}}</em></strong>
       </footer>
 
     </body>

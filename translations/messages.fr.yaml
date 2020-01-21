@@ -46,6 +46,7 @@ create_nomenclature_description: Completez le formulaire ci dessous pour créer 
 nomenclature-dropzone-intro: Pour créer une nomenclature déposé simplement vos image dans la zone ci-dessous
 nomenclature-minimum-cards: <strong class="has-text-weight-bold">Attention:</strong> Une nomenclature doit contenir <strong class="has-text-danger has-text-weight-bold">au moin 4 images</strong>.
 nomenclature-edit-intro: A nomenclature .... TBC
+card_license: CC BY NC SA 4.0
 
 # Help text in forms
 help-nomenclature-name: Ce name est utilisé par le moteur de recherche pour retrouver ue nomenclature. il n'est pas imprimé dans le PDF.
